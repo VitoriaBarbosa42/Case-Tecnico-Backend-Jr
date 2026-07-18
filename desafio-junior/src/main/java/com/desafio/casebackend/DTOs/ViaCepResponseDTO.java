@@ -1,7 +1,8 @@
 package com.desafio.casebackend.DTOs;
 
 
-public record EnderecoResponseDTO(
+public record ViaCepResponseDTO(
+
         String cep,
         String logradouro,
         String complemento,
