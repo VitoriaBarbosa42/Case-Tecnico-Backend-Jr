@@ -3,6 +3,9 @@ package com.desafio.casebackend.Utils;
 public class Validadores {
 
     public String validaCep(String cep){
+        if(cep == null) {
+            throw new NullPointerException("CEP não pode ser nulo");
+        }
         if(cep.length() != 8){
             throw new IllegalArgumentException("O CEP deve conter 8 caracteres");
         } else {

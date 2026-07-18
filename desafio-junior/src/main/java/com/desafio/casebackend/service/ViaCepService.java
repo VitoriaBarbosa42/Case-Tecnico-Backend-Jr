@@ -28,10 +28,10 @@ public class ViaCepService {
                     .connectTimeout(Duration.ofSeconds(30))
                     .build();
 
-            HttpRequest httpRequest = HttpRequest.newBuilder()
-                    .GET()
-                    .uri(URI.create(viaCepUrl+cepString+"/json"))
-                    .build();
+                HttpRequest httpRequest = HttpRequest.newBuilder()
+                        .GET()
+                        .uri(URI.create(viaCepUrl+cepString+"/json"))
+                        .build();
 
             HttpResponse<String> httpResponse = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
 
