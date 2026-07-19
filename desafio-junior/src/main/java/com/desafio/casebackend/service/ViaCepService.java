@@ -2,12 +2,14 @@ package com.desafio.casebackend.service;
 
 import com.desafio.casebackend.DTOs.ViaCepResponseDTO;
 import com.desafio.casebackend.Utils.Validadores;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class ViaCepService {
 
-    ViaCepHttpClient client = new ViaCepHttpClient();
+    private final ViaCepHttpClient client;
 
     public ViaCepResponseDTO buscaPorCep(String cepString) {
 

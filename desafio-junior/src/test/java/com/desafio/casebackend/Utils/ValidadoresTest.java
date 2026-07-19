@@ -15,14 +15,14 @@ public class ValidadoresTest {
         validadores = new Validadores();
     }
 
-//    @Test
-//    @DisplayName("")
-//    void test_RetornaCep_QuandoFormatoValido(){
-//
-//        String cepValido = "05662020";
-//        String result = validadores.validaCep(cepValido);
-//        Assertions.assertEquals(result, cepValido);
-//    }
+    @Test
+    @DisplayName("")
+    void test_RetornaCep_QuandoFormatoValido(){
+
+        String cepValido = "05662020";
+        String result = validadores.validaCep(cepValido);
+        Assertions.assertEquals(result, cepValido);
+    }
 
     @Test
     @DisplayName("")

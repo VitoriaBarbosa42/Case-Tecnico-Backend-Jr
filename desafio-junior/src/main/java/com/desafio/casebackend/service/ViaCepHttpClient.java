@@ -2,6 +2,7 @@ package com.desafio.casebackend.service;
 
 import com.desafio.casebackend.DTOs.ViaCepResponseDTO;
 import com.google.gson.Gson;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.net.URI;
@@ -9,6 +10,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Duration;
 
+@Component
 public class ViaCepHttpClient {
 
     private static final String viaCepUrl = "https://viacep.com.br/ws/";
