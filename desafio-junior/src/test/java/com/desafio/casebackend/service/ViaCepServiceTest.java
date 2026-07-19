@@ -2,6 +2,7 @@ package com.desafio.casebackend.service;
 
 import com.desafio.casebackend.DTOs.ViaCepResponseDTO;
 import com.desafio.casebackend.Utils.Validadores;
+import com.desafio.casebackend.client.ViaCepClient;
 import com.github.tomakehurst.wiremock.junit5.WireMockTest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -18,7 +19,7 @@ public class ViaCepServiceTest {
 
 
     @Mock
-    ViaCepHttpClient client;
+    ViaCepClient client;
 
     @InjectMocks
     ViaCepService viaCepService;
@@ -26,18 +27,16 @@ public class ViaCepServiceTest {
     @Test
     void deveRetornarResponseEndereco_QuandoApiExternaResponderComSucesso() {
 
-        ViaCepResponseDTO expect = ViaCepResponseDTO.builder()
-                .cep("01001-000")
-                .logradouro("Praça da Sé")
-                .complemento("lado ímpar")
-                .bairro("Sé")
-                .localidade("São Paulo")
-                .build();
+        ViaCepResponseDTO expect = new ViaCepResponseDTO(
+                    "01001-000",
+                    "Praça da Sé",
+                    "lado ímpar",
+                    "Sé",
+                    "São Paulo"
+                );
 
-        Mockito.when(client.clienteHttp("01001000")).thenReturn(expect);
+        Mockito.when(client.getEnderecoCep("01001000")).thenReturn(expect);;
 
-        ViaCepResponseDTO result = viaCepService.buscaPorCep("01001000");
-
-        Assertions.assertEquals(expect, result);
+        Assertions.assertEquals(expect, viaCepService.buscaPorCep("01001000"));
     }
 }
