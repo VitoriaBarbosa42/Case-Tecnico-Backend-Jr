@@ -16,7 +16,6 @@ public class ErrorResponse {
 
     public ErrorResponse(int value, String requisiçãoInválida, String message, String requestURI) {
         this.timestamp = LocalDateTime.now();
-        this.status = status;
         this.error = error;
         this.message = message;
         this.path = path;

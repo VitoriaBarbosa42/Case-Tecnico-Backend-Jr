@@ -20,8 +20,6 @@ public class ViaCepController {
     @GetMapping("{cep}")
     public ViaCepResponseDTO getAddress (@PathVariable String cep){
 
-        ViaCepResponseDTO viaCepResponseDTO = viaCepService.buscaCep(cep);
-
-        return viaCepResponseDTO;
+        return viaCepService.buscaPorCep(cep);
     }
 }
