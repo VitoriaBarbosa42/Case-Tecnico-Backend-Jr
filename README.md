@@ -382,7 +382,7 @@ curl -X GET "http://localhost:8080/viacep/123"
 **Resposta (400 Bad Request):**
 ```json
 {
-  "timestamp": "2024-01-15T10:32:10.456",
+  "timestamp": "2026-01-15T10:32:10.456",
   "status": 400,
   "error": "Requisição Inválida",
   "message": "O CEP deve conter 8 caracteres numericos",
@@ -437,7 +437,3 @@ Este projeto é um case técnico para avaliação.
 
 Este é um projeto de avaliação técnica. Sugestões e melhorias são bem-vindas através de issues ou pull requests.
 
----
-
-**Última atualização:** 2024  
-**Status:** ✅ Pronto para Produção
