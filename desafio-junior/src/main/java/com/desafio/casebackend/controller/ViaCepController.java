@@ -4,15 +4,9 @@ package com.desafio.casebackend.controller;
 import com.desafio.casebackend.DTOs.ViaCepResponseDTO;
 
 import com.desafio.casebackend.service.ViaCepService;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
-import lombok.NoArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import java.net.http.HttpResponse;
 
 @RestController
 @RequestMapping("/viacep")
