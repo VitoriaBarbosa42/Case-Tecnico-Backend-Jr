@@ -1,9 +1,8 @@
 package com.desafio.casebackend.service;
 
 import com.desafio.casebackend.DTOs.ViaCepResponseDTO;
-import com.desafio.casebackend.Utils.Validadores;
+import com.desafio.casebackend.utils.Validadores;
 import com.desafio.casebackend.client.ViaCepClient;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service

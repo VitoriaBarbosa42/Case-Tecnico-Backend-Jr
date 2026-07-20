@@ -25,6 +25,12 @@ public class ViaCepController {
         this.viaCepService = viaCepService;
     }
 
+    @GetMapping("/")
+    public ResponseEntity<ViaCepResponseDTO> cepNull(){
+
+        return ResponseEntity.ok(viaCepService.buscaPorCep(null));
+    }
+
     @GetMapping("/{cep}")
     public ResponseEntity<ViaCepResponseDTO> getAddress (
             @PathVariable

@@ -9,5 +9,5 @@ import org.springframework.web.bind.annotation.PathVariable;
 public interface ViaCepClient {
 
     @GetMapping("/{cep}/json")
-    ViaCepResponseDTO getEnderecoCep(@PathVariable("cep") String cep);
+    ViaCepResponseDTO getEnderecoCep(@PathVariable String cep);
 }
