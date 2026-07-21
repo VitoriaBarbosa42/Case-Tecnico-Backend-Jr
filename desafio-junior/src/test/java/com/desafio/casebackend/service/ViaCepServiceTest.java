@@ -1,6 +1,6 @@
 package com.desafio.casebackend.service;
 
-import com.desafio.casebackend.DTOs.ViaCepResponseDTO;
+import com.desafio.casebackend.dtos.ViaCepResponseDTO;
 import com.desafio.casebackend.client.ViaCepClient;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
@@ -33,7 +33,7 @@ public class ViaCepServiceTest {
     void shouldReturnAddressWhenValidCepAndApiRespondsSuccessfully() {
         ViaCepResponseDTO expectedResponse = new ViaCepResponseDTO(
                 "01001-000",
-                "Praça da Sé",
+                "praça da sé",
                 "lado ímpar",
                 "Sé",
                 "São Paulo"
@@ -52,7 +52,7 @@ public class ViaCepServiceTest {
     void shouldReturnAddressWhenCepWithHyphenAndApiRespondsSuccessfully() {
         ViaCepResponseDTO expectedResponse = new ViaCepResponseDTO(
                 "01001-000",
-                "Praça da Sé",
+                "praça da sé",
                 "lado ímpar",
                 "Sé",
                 "São Paulo"
@@ -115,4 +115,3 @@ public class ViaCepServiceTest {
         verify(client, times(1)).getEnderecoCep(CEP_VALIDO);
     }
 }
-

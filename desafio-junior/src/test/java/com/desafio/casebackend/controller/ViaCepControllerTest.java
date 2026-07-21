@@ -1,31 +1,47 @@
 package com.desafio.casebackend.controller;
 
-import com.desafio.casebackend.DTOs.ViaCepResponseDTO;
+import com.desafio.casebackend.dtos.ViaCepResponseDTO;
 import com.desafio.casebackend.service.ViaCepService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.ResponseEntity;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
+@ExtendWith(MockitoExtension.class)
 @DisplayName("Testes unitários para ViaCepController")
 public class ViaCepControllerTest {
 
-    private static final String CEP_VALIDO = "01001000";
+    @Mock
+    private ViaCepService viaCepService;
+
+    @InjectMocks
+    private ViaCepController viaCepController;
 
     @Test
-    @DisplayName("Deve instanciar controller com service via construtor")
-    void shouldInstantiateControllerWithServiceViaConstructor() {
-        ViaCepService mockService = new ViaCepService(null);
-        ViaCepController controller = new ViaCepController(mockService);
-        
-        assertNotNull(controller);
-    }
+    @DisplayName("Deve retornar endereço quando CEP for válido")
+    void shouldReturnAddressWhenCepIsValid() {
+        String cep = "01001000";
+        ViaCepResponseDTO expectedResponse = new ViaCepResponseDTO(
+                "01001-000",
+                "praça da sé",
+                "lado ímpar",
+                "Sé",
+                "São Paulo"
+        );
 
-    @Test
-    @DisplayName("Deve aceitar service nulo no construtor (Spring irá injetar)")
-    void shouldAcceptNullServiceInConstructor() {
-        ViaCepController controller = new ViaCepController(null);
-        
-        assertNotNull(controller);
+        when(viaCepService.buscaPorCep(cep)).thenReturn(expectedResponse);
+
+        ResponseEntity<ViaCepResponseDTO> response = viaCepController.getAddress(cep);
+
+        assertNotNull(response);
+        assertEquals(200, response.getStatusCode().value());
+        assertEquals(expectedResponse, response.getBody());
+        verify(viaCepService, times(1)).buscaPorCep(cep);
     }
 }

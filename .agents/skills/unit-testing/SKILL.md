@@ -66,6 +66,7 @@ Ao analisar ou escrever qualquer teste unitário, você deve validar obrigatoria
 - [ ] Dados de teste são realistas e expressivos?
 - [ ] Utiliza constantes nomeadas ao invés de *Magic Numbers* / *Magic Strings*?
 - [ ] Comentários são desnecessários porque o próprio código é autodocumentado?
+- [ ] Ausência de campos, mocks (`@Mock`), instâncias (`@InjectMocks`), variáveis ou dependências desnecessárias/não utilizadas.
 
 ---
 

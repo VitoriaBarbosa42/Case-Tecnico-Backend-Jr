@@ -1,5 +1,6 @@
-package com.desafio.casebackend.error;
+package com.desafio.casebackend.exceptions;
 
+import com.desafio.casebackend.dtos.ExceptionsDTO;
 import jakarta.servlet.http.HttpServletRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -7,6 +8,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.ResponseEntity;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -29,65 +31,68 @@ public class GlobalExceptionHandlerTest {
     }
 
     @Test
-    @DisplayName("Deve handle IllegalArgumentException e retornar ResponseEntity com status 400")
+    @DisplayName("Deve tratar IllegalArgumentException e retornar ResponseEntity com status 400")
     void shouldHandleIllegalArgumentExceptionAndReturnBadRequest() {
         IllegalArgumentException exception = new IllegalArgumentException(ERROR_MESSAGE);
         when(request.getRequestURI()).thenReturn(REQUEST_URI);
 
-        var response = exceptionHandler.handleIllegalArgument(exception, request);
+        ResponseEntity<ExceptionsDTO> response = exceptionHandler.handleIllegalArgument(exception, request);
 
         assertNotNull(response);
         assertEquals(400, response.getStatusCode().value());
         
-        ErrorResponse errorBody = response.getBody();
+        ExceptionsDTO errorBody = response.getBody();
         assertNotNull(errorBody);
-        assertEquals(400, errorBody.getStatus());
-        assertEquals("Requisição Inválida", errorBody.getError());
-        assertEquals(ERROR_MESSAGE, errorBody.getMessage());
-        assertEquals(REQUEST_URI, errorBody.getPath());
-        assertNotNull(errorBody.getTimestamp());
+        assertEquals(400, errorBody.status());
+        assertEquals("Requisição Inválida", errorBody.error());
+        assertEquals(ERROR_MESSAGE, errorBody.message());
+        assertEquals(REQUEST_URI, errorBody.path());
+        assertNotNull(errorBody.timestamp());
         
         verify(request, times(1)).getRequestURI();
     }
 
     @Test
-    @DisplayName("Deve incluir timestamp atual no ErrorResponse")
-    void shouldIncludeCurrentTimestampInErrorResponse() {
+    @DisplayName("Deve incluir timestamp atual no ExceptionsDTO")
+    void shouldIncludeCurrentTimestampInExceptionsDTO() {
         IllegalArgumentException exception = new IllegalArgumentException(ERROR_MESSAGE);
         when(request.getRequestURI()).thenReturn(REQUEST_URI);
 
-        var beforeTime = System.currentTimeMillis();
-        var response = exceptionHandler.handleIllegalArgument(exception, request);
-        var afterTime = System.currentTimeMillis();
+        long beforeTime = System.currentTimeMillis();
+        ResponseEntity<ExceptionsDTO> response = exceptionHandler.handleIllegalArgument(exception, request);
+        long afterTime = System.currentTimeMillis();
 
-        ErrorResponse errorBody = response.getBody();
-        assertNotNull(errorBody.getTimestamp());
+        ExceptionsDTO errorBody = response.getBody();
+        assertNotNull(errorBody);
+        assertNotNull(errorBody.timestamp());
         
-        var timestampMillis = errorBody.getTimestamp().atZone(java.time.ZoneId.systemDefault()).toInstant().toEpochMilli();
+        long timestampMillis = errorBody.timestamp().atZone(java.time.ZoneId.systemDefault()).toInstant().toEpochMilli();
         assertTrue(timestampMillis >= beforeTime && timestampMillis <= afterTime);
     }
 
     @Test
-    @DisplayName("Deve usar mensagem da exceção no ErrorResponse")
-    void shouldUseExceptionMessageInErrorResponse() {
+    @DisplayName("Deve usar mensagem da exceção no ExceptionsDTO")
+    void shouldUseExceptionMessageInExceptionsDTO() {
         String customMessage = "Custom error message";
         IllegalArgumentException exception = new IllegalArgumentException(customMessage);
         when(request.getRequestURI()).thenReturn(REQUEST_URI);
 
-        var response = exceptionHandler.handleIllegalArgument(exception, request);
+        ResponseEntity<ExceptionsDTO> response = exceptionHandler.handleIllegalArgument(exception, request);
 
-        assertEquals(customMessage, response.getBody().getMessage());
+        assertNotNull(response.getBody());
+        assertEquals(customMessage, response.getBody().message());
     }
 
     @Test
-    @DisplayName("Deve usar URI da requisição no ErrorResponse")
-    void shouldUseRequestUriInErrorResponse() {
+    @DisplayName("Deve usar URI da requisição no ExceptionsDTO")
+    void shouldUseRequestUriInExceptionsDTO() {
         String customUri = "/api/custom/endpoint";
         IllegalArgumentException exception = new IllegalArgumentException(ERROR_MESSAGE);
         when(request.getRequestURI()).thenReturn(customUri);
 
-        var response = exceptionHandler.handleIllegalArgument(exception, request);
+        ResponseEntity<ExceptionsDTO> response = exceptionHandler.handleIllegalArgument(exception, request);
 
-        assertEquals(customUri, response.getBody().getPath());
+        assertNotNull(response.getBody());
+        assertEquals(customUri, response.getBody().path());
     }
 }

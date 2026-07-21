@@ -1,6 +1,6 @@
 package com.desafio.casebackend.client;
 
-import com.desafio.casebackend.DTOs.ViaCepResponseDTO;
+import com.desafio.casebackend.dtos.ViaCepResponseDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
