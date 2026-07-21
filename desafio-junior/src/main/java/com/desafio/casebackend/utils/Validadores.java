@@ -5,7 +5,7 @@ public class Validadores {
     public static String validaCep(String cep) {
 
         if (cep == null || cep.isBlank()) {
-            throw new NullPointerException("O CEP não pode ser nulo nem estar em branco");
+            throw new IllegalArgumentException("O CEP não pode ser nulo nem estar em branco");
         }
 
         String cepNoNull = cep.replaceAll("\\D", "");
