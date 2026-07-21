@@ -1,5 +1,5 @@
 ---
-name: unit-testing-qa
+name: unit-testing
 description: Atua como Especialista QA para análise de repositório, diagnóstico de cobertura, verificação de critérios de qualidade (AAA, mutabilidade, naming), implementação de testes unitários em Java/JUnit 5/Mockito e geração de relatório interativo em HTML com gráficos de cobertura e sugestões.
 ---
 
@@ -96,10 +96,10 @@ Ao analisar ou escrever qualquer teste unitário, você deve validar obrigatoria
 ## 📊 Geração Obrigatória de Relatório HTML
 
 Ao finalizar a execução desta skill, o agente **DEVE obrigatoriamente**:
-1. Garantir a existência da pasta `report/` na raiz do projeto.
-2. Gerar o arquivo de relatório HTML final em `report/unit-testing-report.html`.
+1. Garantir a existência da pasta `report-testes/` na raiz do projeto.
+2. Gerar o arquivo de relatório HTML final em `report-testes/unit-testing-report.html`.
 3. O relatório HTML deve ser completo, moderno e conter:
    - **Resumo de Cobertura e Qualidade**: estatísticas das classes testadas.
    - **Checklist QA**: validação dos 8 critérios (Nomenclatura, AAA, Isolamento, Assertions, Mutabilidade, Cenários, Independência, Clareza).
    - **Detalhamento de Testes**: lista de todos os testes unitários com seus cenários (Happy Path, Sad Path, Edge Cases).
-   - **Melhorias e Próximos Passos**: sugestões acionáveis para o projeto.
+   - **Melhorias e Próximos Passos**: sugestões acionáveis para o projeto.

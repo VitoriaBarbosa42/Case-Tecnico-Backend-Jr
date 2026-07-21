@@ -5,6 +5,8 @@ import com.desafio.casebackend.utils.Validadores;
 import com.desafio.casebackend.client.ViaCepClient;
 import org.springframework.stereotype.Service;
 
+import java.util.Locale;
+
 @Service
 public class ViaCepService {
 
@@ -16,7 +18,10 @@ public class ViaCepService {
 
     public ViaCepResponseDTO buscaPorCep(String cepString) {
 
-        return client.getEnderecoCep(Validadores.validaCep(cepString));
+        ViaCepResponseDTO response =  client.getEnderecoCep(Validadores.validaCep(cepString));
+        response.logradouro().toLowerCase(Locale.getDefault());
+
+        return response;
     }
 }
 

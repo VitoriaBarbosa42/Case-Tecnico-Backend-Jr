@@ -1,154 +1,102 @@
 ---
 name: code-review
-description: 'Realiza revisão de código em arquitetura MVC/BFF com análise SOLID e Clean Code, gerando relatório HTML com sugestões acionáveis'
+description: Realiza revisão de código em arquitetura MVC/BFF com análise SOLID e Clean Code, gerando relatório HTML estilizado com sugestões acionáveis na pasta report-review.
 ---
 
-# Code Review Skill
+# 🔍 Skill: Code Review & Arquitetura MVC/BFF
 
-## Visão Geral
-Esta skill guia a revisão de código em aplicações estruturadas como MVC simples funcionando como BFF (Backend for Frontend) para integração com APIs externas. O objetivo é garantir conformidade com princípios SOLID e Clean Code, gerando feedback estruturado e acionável.
+Esta skill guia a revisão de código em aplicações estruturadas em padrão MVC e BFF (Backend for Frontend). Seu objetivo é identificar pontos de melhoria, garantindo conformidade com princípios SOLID, Clean Code e boas práticas de segurança e resiliência, gerando feedback acionável e um relatório interativo em HTML.
 
-## Pré-requisitos
-- Aplicação estruturada em padrão MVC
-- Funcionalidade de BFF (consulta API externa e retorna campos do contrato)
-- Repositório Git com histórico de commits
+---
 
-## Fluxo de Trabalho
+## 🎭 Persona: Especialista em Arquitetura de Software & Code Review
+
+Você atua como um **Arquiteto de Software Principal / Code Reviewer Lead**.
+Você valoriza:
+- Arquitetura limpa, coesa e de fácil manutenção.
+- Separação clara de responsabilidades por camada (MVC/BFF).
+- Código legível, testável e seguro.
+- Feedback construtivo com comparações claras de código (Antes x Depois).
+
+---
+
+## 📋 Checklist de Análise de Código
+
+Ao revisar o código, valide rigorosamente os seguintes pilares:
+
+### 1. Camadas MVC & BFF
+- **Model**: Estrutura de dados coesa, imutabilidade quando aplicável, validações adequadas.
+- **View / DTO**: DTOs bem definidos para contratos de entrada/saída, ausência de vazamento de entidades internas.
+- **Controller**: Controladores enxutos (*thin controllers*), apenas roteamento e delegação, sem regra de negócio.
+- **BFF (Integration / Client)**: Mapeamento correto com APIs externas, tolerância a falhas, tratamento de timeouts/status de erro, sanitização de dados.
+
+### 2. Princípios SOLID
+- **Single Responsibility (SRP)**: Cada classe/método possui apenas uma razão para mudar.
+- **Open/Closed (OCP)**: Extensível sem necessidade de alterar o código existente.
+- **Liskov Substitution (LSP)**: Subtipos podem substituir seus tipos base sem alterar a corretude.
+- **Interface Segregation (ISP)**: Interfaces pequenas e focadas.
+- **Dependency Inversion (DIP)**: Injeção de dependências e acoplamento a abstrações (interfaces) em vez de implementações concretas.
+
+### 3. Clean Code & Boas Práticas
+- Nomenclatura descritiva em inglês/português padronizado.
+- Funções pequenas e focadas em uma única tarefa.
+- Ausência de código duplicado (DRY).
+- Tratamento de exceções específico (evitar capturar/lançar `Exception` genérica ou `NullPointerException` indevida).
+- Presença e qualidade de testes unitários/integração.
+
+---
+
+## 🛠️ Fluxo de Trabalho do Agente
 
 ### 1. Coleta de Escopo
-Pergunta inicial ao usuário:
+No início da execução, solicite confirmação ao usuário sobre o escopo da revisão:
+> "Deseja revisar **todo o código do projeto** ou apenas as **alterações do último commit / branch**?"
 
-> "Deseja revisar **todo o código** ou apenas as **alterações do último commit**?"
+### 2. Análise do Refinamento Técnico
+Antes de analisar o código, consulte obrigatoriamente o documento de refinamento técnico em `.agents/skills/criar-docs/refinamentos/refinamento.md` (ou `/criar-docs/refinamentos`) para entender as regras de negócio acordadas (ex: consumo do ViaCEP, remoção dos campos IBGE, GIA, DDD e Siafe, conversão do logradouro para lowercase) e verificar se o código cumpre esses requisitos.
 
-**Opções esperadas:**
-- Todo o código → Análise completa do projeto
-- Último commit → Análise incremental das mudanças recentes
+### 3. Análise de Código
+Percorra os arquivos do escopo selecionado aplicando o checklist de qualidade (MVC, BFF, SOLID, Clean Code e alinhamento com o refinamento).
 
-### 2. Análise de Código
+### 4. Categorização das Sugestões
+Classifique cada apontamento conforme a estrutura:
+- **Categoria**: `Crítico` (bloqueante / erro grave) | `Importante` (débito técnico / melhoria estrutural) | `Sugestão` (qualidade de código / refinamento)
+- **Componente**: `Model` | `View` | `Controller` | `Service` | `BFF` | `Infra` | `Error Handler` | `Utils` | `Tests`
+- **Título**: Resumo claro e acionável
+- **Problema**: Localização exata (arquivo/linhas) e descrição da violação
+- **Impacto**: Risco técnico e atributos afetados (Manutenibilidade, Performance, Segurança, Confiabilidade)
+- **Solução Sugerida**: Passos de resolução e exemplo comparativo de código (Antes x Depois)
 
-#### 2.1 Revisão por Camada MVC
-- **Model**: Estrutura de dados, validações, imutabilidade
-- **View**: Serialização de respostas, contrato de API
-- **Controller**: Regras de negócio, delegação, injeção de dependência
+---
 
-#### 2.2 Análise BFF
-- Mapeamento correto entre resposta externa e resposta contratada
-- Tratamento de erros na integração
-- Performance (requisições desnecessárias, caching)
-- Segurança (validação de entrada, sanitização)
+## 📊 Geração Obrigatória de Relatório HTML
 
-#### 2.3 Princípios SOLID
-- **Single Responsibility**: Cada classe tem uma única razão para mudar
-- **Open/Closed**: Aberto para extensão, fechado para modificação
-- **Liskov Substitution**: Subtipagem respeitada
-- **Interface Segregation**: Interfaces específicas, não genéricas
-- **Dependency Inversion**: Depender de abstrações, não implementações
+Ao finalizar a análise, o agente **DEVE obrigatoriamente**:
 
-#### 2.4 Princípios Clean Code
-- Nomes descritivos e significativos
-- Funções pequenas e focadas
-- Ausência de código duplicado (DRY)
-- Tratamento de erros explícito
-- Testes unitários adequados
+1. **Garantir a existência da pasta `report-review/`** na raiz do projeto (criando a pasta se ela não existir).
+2. **Gerar o arquivo de relatório HTML final** em `report-review/code-review-report.html`.
 
-### 3. Categorização de Sugestões
+### Conteúdo Mínimo do Relatório:
+- **Header & Metadados**: Data da revisão, escopo analisado, linguagem/framework, score ou resumo executivo.
+- **Estatísticas Visuais**: Total de achados por severidade (Crítico, Importante, Sugestão) e por camada.
+- **Seção de Achados Críticos**: Apresentação detalhada com código Antes x Depois lado a lado ou empilhado.
+- **Seção de Achados Importantes e Sugestões**: Agrupados por componente.
+- **Matriz de Risco & Esforço**: Risco associado e estimativa de esforço para correção.
+- **Roadmap / Próximos Passos**: Recomendações priorizadas de ação.
 
-Cada sugestão deve seguir este formato:
+---
 
-**Categoria**: [Crítico | Importante | Sugestão]
+## 🎨 Template Estrutural do Relatório HTML
 
-**Componente**: [Model | View | Controller | BFF | Infra]
-
-**Título**: Descrição breve e acionável
-
-**Problema**:
-- Onde ocorre (arquivo, linha ou função)
-- Qual é a violação (SOLID, Clean Code, etc)
-- Por que é problemático
-
-**Impacto**:
-- Risco técnico: [Alto | Médio | Baixo]
-- Afeta: [Manutenibilidade | Performance | Segurança | Testabilidade]
-
-**Solução Sugerida**:
-- Passos concretos
-- Exemplo de código (antes/depois)
-- Referências ou padrões
-
-**Próximos Passos**:
-- Ações recomendadas
-
-### 4. Geração de Relatório HTML
-
-O agente deve gerar um arquivo `code-review-report.html` contendo:
-
-#### 4.1 Seção de Resumo
-- Data e escopo da revisão
-- Total de sugestões por categoria (Crítico, Importante, Sugestão)
-- Score geral de qualidade (opcional)
-- Estatísticas por camada (Model, View, Controller, BFF)
-
-#### 4.2 Seção de Mudanças Principais
-- Lista das 3-5 sugestões críticas com maior impacto
-- Apresentação lado-a-lado (antes/depois)
-- Links diretos aos arquivos/linhas
-
-#### 4.3 Seção de Mudanças Adicionais
-- Sugestões importantes agrupadas por componente
-- Formatação legível com exemplos
-
-#### 4.4 Seção de Avaliação de Risco
-- Blockers identificados
-- Dependências técnicas afetadas
-- Compatibilidade com sistema existente
-
-#### 4.5 Seção de Melhorias Sugeridas
-- Roadmap de implementação priorizado
-- Esforço estimado
-- Benefício esperado
-
-### 5. Padrões de Apresentação
-
-#### Diferença entre Observações e Comentários
-- **Observações** (Prose/Bullet): Insights gerais sobre padrões, arquitetura, manutenibilidade
-- **Comentários Específicos**: Feedback concreto vinculado a linhas/funções do diff
-
-#### Acessibilidade
-- Quebrar conteúdo em blocos digeríveis
-- Evitar jargão técnico sem explicação
-- Usar formatação visual clara (cores, ícones, seções)
-
-#### Sugestões Acionáveis
-Cada feedback deve incluir:
-1. **Razão clara**: Por que isso importa
-2. **Especificidade**: Qual é exatamente o problema
-3. **Impacto**: O que é afetado (performance, segurança, manutenção)
-4. **Solução**: Exemplos concretos ou padrões recomendados
-
-## Estrutura do Relatório HTML
+Ao gerar `report-review/code-review-report.html`, utilize a estrutura e os estilos CSS abaixo como padrão de design:
 
 ```html
 <!DOCTYPE html>
-<html>
-<head>
-  <title>Code Review Report</title>
-  <!-- Estrutura esperada -->
-  <!-- - Header com resumo -->
-  <!-- - Navigation/TOC -->
-  <!-- - Resumo Executivo -->
-  <!-- - Mudanças Principais -->
-  <!-- - Mudanças Adicionais -->
-  <!-- - Avaliação de Risco -->
-  <!-- - Melhorias Sugeridas -->
-  <!-- - Próximos Passos -->
-</head>
-<body>
-  <!-- Conteúdo estruturado conforme des<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Code Review - Case Técnico Backend Jr</title>
+    <title>Relatório de Code Review</title>
     <style>
         * {
             margin: 0;
@@ -170,7 +118,7 @@ Cada feedback deve incluir:
             margin: 0 auto;
             background: white;
             border-radius: 12px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
             overflow: hidden;
         }
 
@@ -182,7 +130,7 @@ Cada feedback deve incluir:
         }
 
         header h1 {
-            font-size: 2.5em;
+            font-size: 2.3em;
             margin-bottom: 10px;
         }
 
@@ -195,7 +143,7 @@ Cada feedback deve incluir:
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 20px;
-            padding: 30px 40px;
+            padding: 25px 40px;
             background: #f8f9fa;
             border-bottom: 1px solid #e9ecef;
         }
@@ -205,25 +153,26 @@ Cada feedback deve incluir:
         }
 
         .meta-label {
-            font-size: 0.9em;
+            font-size: 0.85em;
             color: #6c757d;
             text-transform: uppercase;
             letter-spacing: 1px;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
 
         .meta-value {
-            font-size: 1.5em;
+            font-size: 1.3em;
             font-weight: bold;
             color: #667eea;
         }
 
         nav {
-            padding: 20px 40px;
+            padding: 15px 40px;
             border-bottom: 2px solid #e9ecef;
             display: flex;
-            gap: 20px;
+            gap: 15px;
             flex-wrap: wrap;
+            background: #fff;
         }
 
         nav a {
@@ -231,7 +180,7 @@ Cada feedback deve incluir:
             color: #667eea;
             font-weight: 600;
             padding: 8px 16px;
-            border-radius: 4px;
+            border-radius: 6px;
             transition: all 0.3s ease;
         }
 
@@ -245,96 +194,63 @@ Cada feedback deve incluir:
         }
 
         section {
-            margin-bottom: 60px;
-        }
-
-        section:last-child {
-            margin-bottom: 0;
+            margin-bottom: 50px;
         }
 
         h2 {
-            font-size: 2em;
+            font-size: 1.8em;
             color: #667eea;
-            margin-bottom: 30px;
-            padding-bottom: 15px;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
             border-bottom: 3px solid #667eea;
             display: flex;
             align-items: center;
-            gap: 15px;
-        }
-
-        h2::before {
-            content: '';
-            display: inline-block;
-            width: 8px;
-            height: 8px;
-            background: #667eea;
-            border-radius: 50%;
+            gap: 12px;
         }
 
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
             gap: 20px;
             margin-bottom: 30px;
         }
 
         .stat-card {
             background: #f8f9fa;
-            border-left: 4px solid #667eea;
+            border-left: 5px solid #667eea;
             padding: 20px;
             border-radius: 8px;
             text-align: center;
         }
 
-        .stat-card.critical {
-            border-left-color: #dc3545;
-        }
-
-        .stat-card.warning {
-            border-left-color: #ffc107;
-        }
-
-        .stat-card.info {
-            border-left-color: #17a2b8;
-        }
+        .stat-card.critical { border-left-color: #dc3545; }
+        .stat-card.warning { border-left-color: #ffc107; }
+        .stat-card.info { border-left-color: #17a2b8; }
 
         .stat-number {
-            font-size: 2.5em;
+            font-size: 2.2em;
             font-weight: bold;
             color: #667eea;
         }
 
-        .stat-card.critical .stat-number {
-            color: #dc3545;
-        }
-
-        .stat-card.warning .stat-number {
-            color: #ffc107;
-        }
-
-        .stat-card.info .stat-number {
-            color: #17a2b8;
-        }
+        .stat-card.critical .stat-number { color: #dc3545; }
+        .stat-card.warning .stat-number { color: #d99b00; }
+        .stat-card.info .stat-number { color: #17a2b8; }
 
         .stat-label {
             color: #6c757d;
             font-size: 0.9em;
-            margin-top: 8px;
+            margin-top: 6px;
+            font-weight: 500;
         }
 
         .review-item {
             background: #f8f9fa;
             border-left: 5px solid #667eea;
             padding: 25px;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             border-radius: 8px;
             transition: all 0.3s ease;
-        }
-
-        .review-item:hover {
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.1);
-            transform: translateX(5px);
         }
 
         .review-item.critical {
@@ -355,47 +271,29 @@ Cada feedback deve incluir:
         .review-header {
             display: flex;
             align-items: center;
-            gap: 15px;
-            margin-bottom: 15px;
+            gap: 12px;
+            margin-bottom: 12px;
         }
 
         .badge {
             display: inline-block;
             padding: 4px 12px;
             border-radius: 20px;
-            font-size: 0.85em;
-            font-weight: 600;
+            font-size: 0.8em;
+            font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
 
-        .badge.critical {
-            background: #dc3545;
-            color: white;
-        }
-
-        .badge.warning {
-            background: #ffc107;
-            color: #333;
-        }
-
-        .badge.info {
-            background: #17a2b8;
-            color: white;
-        }
-
-        .badge.component {
-            background: #667eea;
-            color: white;
-            font-weight: 500;
-            text-transform: none;
-            letter-spacing: 0;
-        }
+        .badge.critical { background: #dc3545; color: white; }
+        .badge.warning { background: #ffc107; color: #333; }
+        .badge.info { background: #17a2b8; color: white; }
+        .badge.component { background: #667eea; color: white; text-transform: none; }
 
         .review-title {
-            font-size: 1.3em;
-            font-weight: 600;
-            color: #333;
+            font-size: 1.25em;
+            font-weight: 700;
+            color: #2d3748;
         }
 
         .review-section {
@@ -404,46 +302,9 @@ Cada feedback deve incluir:
 
         .review-section-title {
             font-weight: 600;
-            color: #667eea;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .review-section-title::before {
-            content: '';
-            display: inline-block;
-            width: 4px;
-            height: 4px;
-            background: #667eea;
-            border-radius: 50%;
-        }
-
-        .review-content {
-            color: #555;
-            line-height: 1.8;
-            margin-bottom: 10px;
-        }
-
-        .code-block {
-            background: #2d2d2d;
-            color: #f8f8f2;
-            padding: 15px;
-            border-radius: 6px;
-            overflow-x: auto;
-            margin: 15px 0;
-            font-family: 'Monaco', 'Courier New', monospace;
-            font-size: 0.9em;
-            line-height: 1.5;
-        }
-
-        .code-block.before {
-            border-left: 4px solid #dc3545;
-        }
-
-        .code-block.after {
-            border-left: 4px solid #28a745;
+            color: #4a5568;
+            margin-bottom: 6px;
+            font-size: 0.95em;
         }
 
         .code-comparison {
@@ -454,538 +315,138 @@ Cada feedback deve incluir:
         }
 
         @media (max-width: 768px) {
-            .code-comparison {
-                grid-template-columns: 1fr;
-            }
+            .code-comparison { grid-template-columns: 1fr; }
         }
 
         .comparison-label {
             font-size: 0.85em;
-            font-weight: 600;
+            font-weight: 700;
             text-transform: uppercase;
-            margin-bottom: 8px;
-            color: #6c757d;
+            margin-bottom: 6px;
+            color: #4a5568;
         }
+
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 16px;
+            border-radius: 6px;
+            overflow-x: auto;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.88em;
+            line-height: 1.5;
+        }
+
+        .code-block.before { border-left: 4px solid #dc3545; }
+        .code-block.after { border-left: 4px solid #28a745; }
 
         .impact {
             display: flex;
             gap: 20px;
             margin-top: 15px;
             padding-top: 15px;
-            border-top: 1px solid rgba(0, 0, 0, 0.1);
+            border-top: 1px solid rgba(0, 0, 0, 0.08);
         }
 
-        .impact-item {
-            flex: 1;
-        }
+        .impact-item { flex: 1; }
 
         .impact-label {
-            font-size: 0.85em;
-            font-weight: 600;
+            font-size: 0.8em;
+            font-weight: 700;
             color: #667eea;
             text-transform: uppercase;
-            margin-bottom: 5px;
         }
 
-        .impact-value {
-            color: #555;
-        }
-
-        .severity {
-            display: inline-block;
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-size: 0.85em;
-            font-weight: 600;
-        }
-
-        .severity.high {
-            background: #dc3545;
-            color: white;
-        }
-
-        .severity.medium {
-            background: #ffc107;
-            color: #333;
-        }
-
-        .severity.low {
-            background: #28a745;
-            color: white;
-        }
-
-        .link-button {
-            display: inline-block;
-            padding: 8px 16px;
-            background: #667eea;
-            color: white;
-            text-decoration: none;
-            border-radius: 4px;
-            font-size: 0.9em;
-            margin-top: 10px;
-            transition: background 0.3s ease;
-        }
-
-        .link-button:hover {
-            background: #764ba2;
-        }
-
-        .checklist {
-            list-style: none;
-            margin-top: 10px;
-        }
-
-        .checklist li {
-            padding: 8px 0;
-            padding-left: 25px;
-            position: relative;
-        }
-
-        .checklist li::before {
-            content: '✓';
-            position: absolute;
-            left: 0;
-            color: #28a745;
-            font-weight: bold;
-        }
+        .impact-value { color: #4a5568; font-size: 0.95em; }
 
         footer {
             background: #f8f9fa;
-            padding: 30px 40px;
+            padding: 25px 40px;
             text-align: center;
             color: #6c757d;
             border-top: 1px solid #e9ecef;
-        }
-
-        .architecture-overview {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 8px;
-            margin: 20px 0;
-            font-family: monospace;
-            line-height: 1.8;
-            color: #333;
+            font-size: 0.9em;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>📋 Code Review Report</h1>
-            <p>Case Técnico Backend Jr - Análise Completa de Código</p>
+            <h1>📋 Relatório de Code Review</h1>
+            <p>Análise de Qualidade, Arquitetura MVC/BFF, SOLID e Clean Code</p>
         </header>
 
         <div class="metadata">
             <div class="meta-item">
                 <div class="meta-label">Data</div>
-                <div class="meta-value">20/07/2026</div>
+                <div class="meta-value"><!-- DATA DE EXECUÇÃO --></div>
             </div>
             <div class="meta-item">
                 <div class="meta-label">Escopo</div>
-                <div class="meta-value">Código Completo</div>
+                <div class="meta-value"><!-- ESCOPO SELECIONADO --></div>
             </div>
             <div class="meta-item">
                 <div class="meta-label">Arquitetura</div>
-                <div class="meta-value">Spring Boot MVC/BFF</div>
+                <div class="meta-value"><!-- ARQUITETURA --></div>
             </div>
             <div class="meta-item">
-                <div class="meta-label">Linguagem</div>
-                <div class="meta-value">Java 21</div>
+                <div class="meta-label">Linguagem / Stack</div>
+                <div class="meta-value"><!-- STACK DO PROJETO --></div>
             </div>
         </div>
 
         <nav>
             <a href="#resumo">📊 Resumo</a>
-            <a href="#mudancas-principais">⚡ Críticas</a>
-            <a href="#mudancas-adicionais">📝 Importantes</a>
-            <a href="#risco">⚠️ Risco</a>
-            <a href="#melhorias">🚀 Melhorias</a>
+            <a href="#criticos">⚡ Críticos</a>
+            <a href="#importantes">📝 Importantes</a>
+            <a href="#sugestoes">💡 Sugestões</a>
             <a href="#proximos">➡️ Próximos Passos</a>
         </nav>
 
         <div class="content">
-            <!-- RESUMO EXECUTIVO -->
             <section id="resumo">
                 <h2>Resumo Executivo</h2>
-
                 <div class="stats-grid">
                     <div class="stat-card critical">
-                        <div class="stat-number">3</div>
+                        <div class="stat-number"><!-- QTD CRÍTICOS --></div>
                         <div class="stat-label">Críticos</div>
                     </div>
                     <div class="stat-card warning">
-                        <div class="stat-number">5</div>
+                        <div class="stat-number"><!-- QTD IMPORTANTES --></div>
                         <div class="stat-label">Importantes</div>
                     </div>
                     <div class="stat-card info">
-                        <div class="stat-number">4</div>
+                        <div class="stat-number"><!-- QTD SUGESTÕES --></div>
                         <div class="stat-label">Sugestões</div>
                     </div>
                 </div>
-
-                <div class="review-item info">
-                    <p class="review-content">
-                        <strong>Visão Geral:</strong> O projeto apresenta uma arquitetura MVC bem estruturada com integração BFF para a API ViaCEP.
-                        Embora o código seja funcional, existem pontos críticos que violam princípios SOLID e Clean Code, comprometendo manutenibilidade e confiabilidade.
-                    </p>
-                </div>
-
-                <h3 style="margin-top: 30px; color: #667eea; font-size: 1.3em;">📈 Estatísticas por Camada</h3>
-                <div class="architecture-overview">
-                    Controller: ⚠️ 2 problemas (1 crítico)<br>
-                    Service:   ✓ Bem estruturado<br>
-                    Client:    ✓ Bem estruturado<br>
-                    DTO:       ✓ Bem estruturado<br>
-                    Utils:     ⚠️ 2 problemas (1 crítico)<br>
-                    Error:     ❌ 1 problema crítico<br>
-                    Tests:     ⚠️ 2 incompletos
-                </div>
             </section>
 
-            <!-- MUDANÇAS PRINCIPAIS (CRÍTICAS) -->
-            <section id="mudancas-principais">
-                <h2>Mudanças Principais - Itens Críticos</h2>
-
-                <!-- Issue 1 -->
-                <div class="review-item critical">
-                    <div class="review-header">
-                        <span class="badge critical">Crítico</span>
-                        <span class="badge component">Error Handler</span>
-                    </div>
-                    <div class="review-title">🔴 Construtor de ErrorResponse com assinatura inconsistente</div>
-
-                    <div class="review-section">
-                        <div class="review-section-title">Onde</div>
-                        <div class="review-content">
-                            <strong>Arquivo:</strong> <code>error/ErrorResponse.java</code> (linha 17)<br>
-                            <strong>Contexto:</strong> GlobalExceptionHandler linha 16-21
-                        </div>
-                    </div>
-
-                    <div class="review-section">
-                        <div class="review-section-title">Problema</div>
-                        <div class="review-content">
-                            O construtor declarado com 6 parâmetros não está alinhado com como é chamado no GlobalExceptionHandler.
-                            O construtor recebe parâmetros duplicados e genéricos que não correspondem ao uso prático.
-                        </div>
-                    </div>
-
-                    <div class="code-comparison">
-                        <div>
-                            <div class="comparison-label">❌ Código Atual</div>
-                            <div class="code-block before">// ErrorResponse.java
-public ErrorResponse(int value, String requisiçãoInválida, String message,
-                     String requestURI, String error, String path) {
-    this.timestamp = LocalDateTime.now();
-    this.error = error;
-    this.message = message;
-    this.path = path;
-}
-
-// GlobalExceptionHandler.java - Chamada inconsistente
-new ErrorResponse(
-    status.value(),
-    "Requisição Inválida",
-    ex.getMessage(),
-    request.getRequestURI()  // Faltam 2 parâmetros!
-);</div>
-                        </div>
-                        <div>
-                            <div class="comparison-label">✅ Sugestão</div>
-                            <div class="code-block after">// Usar @AllArgsConstructor ou construtor simples
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class ErrorResponse {
-    private LocalDateTime timestamp;
-    private int status;
-    private String error;
-    private String message;
-    private String path;
-}
-
-// Ou fazer construtor customizado:
-public ErrorResponse(int status, String error,
-                     String message, String path) {
-    this.timestamp = LocalDateTime.now();
-    this.status = status;
-    this.error = error;
-    this.message = message;
-    this.path = path;
-}</div>
-                        </div>
-                    </div>
-
-                    <div class="review-section">
-                        <div class="review-section-title">Violação SOLID</div>
-                        <div class="review-content">
-                            <strong>Single Responsibility:</strong> A classe tem responsabilidade dupla (model + lógica de inicialização)<br>
-                            <strong>Open/Closed:</strong> Difícil de estender sem modificar o construtor
-                        </div>
-                    </div>
-
-                    <div class="impact">
-                        <div class="impact-item">
-                            <div class="impact-label">Risco</div>
-                            <div class="impact-value"><span class="severity high">Alto</span></div>
-                        </div>
-                        <div class="impact-item">
-                            <div class="impact-label">Afeta</div>
-                            <div class="impact-value">Confiabilidade, Testabilidade</div>
-                        </div>
-                        <div class="impact-item">
-                            <div class="impact-label">Effort</div>
-                            <div class="impact-value">15 min</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Issue 2 -->
-                <div class="review-item critical">
-                    <div class="review-header">
-                        <span class="badge critical">Crítico</span>
-                        <span class="badge component">Validador</span>
-                    </div>
-                    <div class="review-title">🔴 Uso de NullPointerException para validação é impropriedade</div>
-
-                    <div class="review-section">
-                        <div class="review-section-title">Onde</div>
-                        <div class="review-content">
-                            <strong>Arquivo:</strong> <code>utils/Validadores.java</code> (linha 7-9)<br>
-                            <strong>Contexto:</strong> Método validaCep()
-                        </div>
-                    </div>
-
-                    <div class="review-section">
-                        <div class="review-section-title">Problema</div>
-                        <div class="review-content">
-                            <code>NullPointerException</code> é uma exception do sistema, não deve ser lançada
-                            por código de negócio. A prática correta é lançar <code>IllegalArgumentException</code> ou
-                            criar uma exceção customizada para validação.
-                        </div>
-                    </div>
-
-                    <div class="code-comparison">
-                        <div>
-                            <div class="comparison-label">❌ Código Atual</div>
-                            <div class="code-block before">if (cep == null || cep.isBlank()) {
-    throw new NullPointerException(
-        "O CEP não pode ser nulo nem estar em branco"
-    );
-}</div>
-                        </div>
-                        <div>
-                            <div class="comparison-label">✅ Sugestão</div>
-                            <div class="code-block after">if (cep == null || cep.isBlank()) {
-    throw new IllegalArgumentException(
-        "O CEP não pode ser nulo nem estar em branco"
-    );
-}</div>
-                        </div>
-                    </div>
-
-                    <div class="review-section">
-                        <div class="review-section-title">Por que importa</div>
-                        <div class="review-content">
-                            • <strong>Clean Code:</strong> Exceptions específicas facilitam tratamento correto<br>
-                            • <strong>Testabilidade:</strong> Testes podem validar exceção esperada<br>
-                            • <strong>GlobalExceptionHandler:</strong> Já trata <code>IllegalArgumentException</code>, não precisa adicionar handler
-                        </div>
-                    </div>
-
-                    <div class="impact">
-                        <div class="impact-item">
-                            <div class="impact-label">Risco</div>
-                            <div class="impact-value"><span class="severity high">Alto</span></div>
-                        </div>
-                        <div class="impact-item">
-                            <div class="impact-label">Afeta</div>
-                            <div class="impact-value">Confiabilidade, Manutenibilidade</div>
-                        </div>
-                        <div class="impact-item">
-                            <div class="impact-label">Effort</div>
-                            <div class="impact-value">5 min</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Issue 3 -->
-                <div class="review-item critical">
-                    <div class="review-header">
-                        <span class="badge critical">Crítico</span>
-                        <span class="badge component">Controller</span>
-                    </div>
-                    <div class="review-title">🔴 Endpoint redundante `GET /viacep/` viola Single Responsibility</div>
-
-                    <div class="review-section">
-                        <div class="review-section-title">Onde</div>
-                        <div class="review-content">
-                            <strong>Arquivo:</strong> <code>controller/ViaCepController.java</code> (linha 22-26)<br>
-                            <strong>Método:</strong> <code>cepNull()</code>
-                        </div>
-                    </div>
-
-                    <div class="review-section">
-                        <div class="review-section-title">Problema</div>
-                        <div class="review-content">
-                            O método <code>cepNull()</code> é semanticamente estranho: passa <code>null</code> para o serviço
-                            que imediatamente vai lançar exceção. Viola princípio de design: não deve haver endpoint
-                            que apenas retorna erro de validação.
-                        </div>
-                    </div>
-
-                    <div class="code-comparison">
-                        <div>
-                            <div class="comparison-label">❌ Código Atual</div>
-                            <div class="code-block before">@GetMapping("/")
-public ResponseEntity<ViaCepResponseDTO> cepNull(){
-    return ResponseEntity.ok(
-        viaCepService.buscaPorCep(null)
-    );
-}
-
-// Sempre retorna erro:
-// GET /viacep/ → 400 Bad Request</div>
-                        </div>
-                        <div>
-                            <div class="comparison-label">✅ Sugestão</div>
-                            <div class="code-block after">// Remover este método completamente!
-
-// Se deseja documentação, adicione:
-@GetMapping("/")
-public ResponseEntity<Map<String, String>> info() {
-    return ResponseEntity.ok(Map.of(
-        "message", "Use /viacep/{cep}",
-        "example", "/viacep/01001000"
-    ));
-}</div>
-                        </div>
-                    </div>
-
-                    <div class="review-section">
-                        <div class="review-section-title">Violação SOLID</div>
-                        <div class="review-content">
-                            <strong>Single Responsibility:</strong> Endpoint deve ter um propósito claro<br>
-                            <strong>Open/Closed:</strong> Endpoint quebrado dificulta futuras extensões
-                        </div>
-                    </div>
-
-                    <div class="impact">
-                        <div class="impact-item">
-                            <div class="impact-label">Risco</div>
-                            <div class="impact-value"><span class="severity high">Alto</span></div>
-                        </div>
-                        <div class="impact-item">
-                            <div class="impact-label">Afeta</div>
-                            <div class="impact-value">Usabilidade, Manutenibilidade</div>
-                        </div>
-                        <div class="impact-item">
-                            <div class="impact-label">Effort</div>
-                            <div class="impact-value">10 min</div>
-                        </div>
-                    </div>
-                </div>
+            <section id="criticos">
+                <h2>Achados Críticos</h2>
+                <!-- ITENS CRÍTICOS COM COMPARAÇÃO ANTES/DEPOIS -->
             </section>
 
-            <!-- MUDANÇAS ADICIONAIS (IMPORTANTES) -->
-            <section id="mudancas-adicionais">
-                <h2>Mudanças Adicionais - Itens Importantes</h2>
+            <section id="importantes">
+                <h2>Achados Importantes</h2>
+                <!-- ITENS IMPORTANTES -->
+            </section>
 
-                <!-- Issue 4 -->
-                <div class="review-item warning">
-                    <div class="review-header">
-                        <span class="badge warning">Importante</span>
-                        <span class="badge component">Validador</span>
-                    </div>
-                    <div class="review-title">⚠️ Validador retorna CEP sem formatação, contrato retorna com formatação</div>
+            <section id="sugestoes">
+                <h2>Sugestões de Melhoria</h2>
+                <!-- SUGESTÕES -->
+            </section>
 
-                    <div class="review-section">
-                        <div class="review-section-title">Onde</div>
-                        <div class="review-content">
-                            <strong>Validadores.java</strong> linha 16 retorna CEP sem formatação<br>
-                            <strong>DTO</strong> mostra CEP como "01001-000" (formatado)
-                        </div>
-                    </div>
+            <section id="proximos">
+                <h2>Próximos Passos & Roadmap</h2>
+                <!-- PLANO DE AÇÃO -->
+            </section>
+        </div>
 
-                    <div class="review-section">
-                        <div class="review-section-title">Problema</div>
-                        <div class="review-content">
-                            Inconsistência entre o que é validado e o que é retornado.
-                            O DTO da API externa retorna formatado ("01001-000"), mas o validador não garante
-                            que o CEP armazenado mantém esta formatação.
-                        </div>
-                    </div>
-
-                    <div class="code-comparison">
-                        <div>
-                            <div class="comparison-label">Fluxo Atual</div>
-                            <div class="code-block before">// Entrada: "01001000"
-Validadores.validaCep("01001000")
-  ↓ remove \D (digits only)
-  ↓ valida length
-  ↓ retorna "01001000"  // SEM formatação!
-
-// Mas DTO retorna:
-"01001-000"  // COM formatação</div>
-                        </div>
-                        <div>
-                            <div class="comparison-label">✅ Solução</div>
-                            <div class="code-block after">// Formatter deve estar na resposta
-// ou antes de armazenar
-
-public static String formatarCep(String cep) {
-    return cep.replaceAll(
-        "(\\d{5})(\\d{3})",
-        "$1-$2"
-    );
-}
-
-// Usar em DTO ou Service</div>
-                        </div>
-                    </div>
-
-                    <div class="impact">
-                        <div class="impact-item">
-                            <div class="impact-label">Risco</div>
-                            <div class="impact-value"><span class="severity medium">Médio</span></div>
-                        </div>
-                        <div class="impact-item">
-                            <div class="impact-label">Afeta</div>
-                            <div class="impact-value">Consistência de Dados</div>
-                        </div>
-                        <div class="impact-item">
-                            <div class="impact-label">Effort</div>
-                            <div class="impact-value">20 min</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Issue 5 -->
-                <div class="review-item warning">
-                    <div class="review-header">
-                        <span class="badge warning">Importante</span>
-                        <span class="badge component">Error Handler</span>
-                    </div>
-                    <div class="review-title">⚠️ GlobalExceptionHandler não trata NullPointerException</div>
-
-                    <div class="review-section">
-                        <div class="review-section-title">Onde</div>
-                        <div class="review-content">
-                            <strong>Arquivo:</strong> <code>error/GlobalExceptionHandler.java</code><br>
-                            Falta handler para <code>NullPointerException</code>
-                        </div>
-                    </div>
-
-                    <div class="review-section">
-                        <div class="review-section-title">Problema</div>
-                        <div class="review-content">
-                            Se <code>NullPointerException</code> for lançada (como no validador), não há
-                            handler específico, resultando em resposta de erro genérica (500).
-                        </div>
-                    </div>
-
-                    <div class="code-comparison">
-                        <div>
-                            <div class="comparison-label">Adicionar Handler</div>crito -->
+        <footer>
+            Gerado automaticamente por Code Review Skill • Agentic AI
+        </footer>
+    </div>
 </body>
 </html>
+```
