@@ -68,6 +68,19 @@ Ao analisar ou escrever qualquer teste unitário, você deve validar obrigatoria
 - [ ] Comentários são desnecessários porque o próprio código é autodocumentado?
 - [ ] Ausência de campos, mocks (`@Mock`), instâncias (`@InjectMocks`), variáveis ou dependências desnecessárias/não utilizadas.
 
+### 9. SEPARAÇÃO DE RESPONSABILIDADES EM DTOS
+- [ ] DTOs/Records são usados estritamente como portadores de dados?
+- [ ] Ausência de regras de negócio ou validações que lancem exceções de negócio (ex: IllegalArgumentException) no construtor de Records?
+
+### 10. VALIDAÇÃO DE ENDPOINTS HTTP (CONTROLLER COM MOCKMVC)
+- [ ] Testes de controlador usam MockMvc (`@WebMvcTest`) para validar anotações de validação de input (`@Pattern`, `@NotBlank`)?
+- [ ] Valida os códigos de retorno HTTP corretos (200, 400, 404, 502)?
+- [ ] Evita testar métodos de controladores como chamadas diretas de objetos Java?
+
+### 11. COBERTURA DE ERROS DE APIS INTEGRADAS (BFF)
+- [ ] Testes cobrem o cenário de CEP inexistente (onde a API parceira retorna status de erro ou flag `erro == true`)?
+- [ ] Testes validam a conversão correta de exceções de comunicação externa (ex: FeignException) para o payload padrão de erro?
+
 ---
 
 ## 🛠️ Ferramentas Recomendadas

@@ -114,4 +114,22 @@ public class ViaCepServiceTest {
 
         verify(client, times(1)).getEnderecoCep(CEP_VALIDO);
     }
+
+    @Test
+    @DisplayName("Deve lançar IllegalArgumentException quando API responde com erro")
+    void shouldThrowExceptionWhenApiRespondsWithError() {
+        ViaCepResponseDTO errorResponse = new ViaCepResponseDTO(
+                null, null, null, null, null, true
+        );
+
+        when(client.getEnderecoCep(CEP_VALIDO)).thenReturn(errorResponse);
+
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> viaCepService.buscaPorCep(CEP_VALIDO)
+        );
+
+        assertEquals("CEP não encontrado", exception.getMessage());
+        verify(client, times(1)).getEnderecoCep(CEP_VALIDO);
+    }
 }

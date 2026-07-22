@@ -3,8 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Relatório de Code Review - Backend Desafio</title>
+    <title>Relatório de Code Review - Desafio Junior Backend</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-light: #818cf8;
+            --primary-dark: #3730a3;
+            --bg-main: #0f172a;
+            --bg-card: #1e293b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border: #334155;
+            --critical: #ef4444;
+            --critical-bg: rgba(239, 68, 68, 0.1);
+            --warning: #f59e0b;
+            --warning-bg: rgba(245, 158, 11, 0.1);
+            --info: #06b6d4;
+            --info-bg: rgba(6, 182, 212, 0.1);
+            --success: #10b981;
+            --success-bg: rgba(16, 185, 129, 0.1);
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -12,196 +32,264 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-main);
             line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            min-height: 100vh;
-            padding: 20px;
+            padding: 40px 20px;
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
-            overflow: hidden;
         }
 
         header {
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-            color: white;
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 50%, var(--primary-light) 100%);
+            border-radius: 16px;
             padding: 40px;
             text-align: center;
+            box-shadow: 0 10px 30px rgba(79, 70, 229, 0.3);
+            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 60%);
+            pointer-events: none;
         }
 
         header h1 {
-            font-size: 2.3em;
+            font-size: 2.8em;
+            font-weight: 800;
+            letter-spacing: -0.025em;
             margin-bottom: 10px;
+            background: linear-gradient(to right, #ffffff, #e2e8f0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         header p {
-            font-size: 1.1em;
-            opacity: 0.9;
+            font-size: 1.2em;
+            color: rgba(255, 255, 255, 0.85);
+            font-weight: 400;
         }
 
         .metadata {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 20px;
-            padding: 25px 40px;
-            background: #f8f9fa;
-            border-bottom: 1px solid #e9ecef;
+            margin-bottom: 40px;
         }
 
         .meta-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
             text-align: center;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .meta-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            border-color: var(--primary-light);
         }
 
         .meta-label {
-            font-size: 0.85em;
-            color: #6c757d;
+            font-size: 0.8em;
+            font-weight: 600;
+            color: var(--text-muted);
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 0.05em;
             margin-bottom: 6px;
         }
 
         .meta-value {
             font-size: 1.2em;
-            font-weight: bold;
-            color: #1e3c72;
+            font-weight: 700;
+            color: var(--text-main);
         }
 
         nav {
-            padding: 15px 40px;
-            border-bottom: 2px solid #e9ecef;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 10px;
             display: flex;
-            gap: 15px;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 40px;
             flex-wrap: wrap;
-            background: #fff;
         }
 
         nav a {
             text-decoration: none;
-            color: #1e3c72;
+            color: var(--text-muted);
             font-weight: 600;
-            padding: 8px 16px;
-            border-radius: 6px;
-            transition: all 0.3s ease;
+            font-size: 0.9em;
+            padding: 10px 20px;
+            border-radius: 8px;
+            transition: all 0.2s ease;
         }
 
         nav a:hover {
-            background: #1e3c72;
+            background: var(--border);
+            color: var(--text-main);
+        }
+
+        nav a.active {
+            background: var(--primary);
             color: white;
-        }
-
-        .content {
-            padding: 40px;
-        }
-
-        section {
-            margin-bottom: 50px;
-        }
-
-        h2 {
-            font-size: 1.8em;
-            color: #1e3c72;
-            margin-bottom: 25px;
-            padding-bottom: 10px;
-            border-bottom: 3px solid #1e3c72;
-            display: flex;
-            align-items: center;
-            gap: 12px;
         }
 
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 20px;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
         }
 
         .stat-card {
-            background: #f8f9fa;
-            border-left: 5px solid #1e3c72;
-            padding: 20px;
-            border-radius: 8px;
-            text-align: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
         }
 
-        .stat-card.critical { border-left-color: #dc3545; }
-        .stat-card.warning { border-left-color: #ffc107; }
-        .stat-card.info { border-left-color: #17a2b8; }
+        .stat-card::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 6px;
+        }
 
-        .stat-number {
+        .stat-card.critical::after { background: var(--critical); }
+        .stat-card.warning::after { background: var(--warning); }
+        .stat-card.info::after { background: var(--info); }
+
+        .stat-info h3 {
+            font-size: 0.9em;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 5px;
+        }
+
+        .stat-info p {
+            font-size: 2.2em;
+            font-weight: 800;
+        }
+
+        .stat-card.critical p { color: var(--critical); }
+        .stat-card.warning p { color: var(--warning); }
+        .stat-card.info p { color: var(--info); }
+
+        .stat-icon {
             font-size: 2.5em;
-            font-weight: bold;
+            opacity: 0.8;
         }
 
-        .stat-card.critical .stat-number { color: #dc3545; }
-        .stat-card.warning .stat-number { color: #d99b00; }
-        .stat-card.info .stat-number { color: #17a2b8; }
+        section {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
 
-        .stat-label {
-            color: #6c757d;
-            font-size: 0.95em;
-            margin-top: 6px;
-            font-weight: 600;
+        h2 {
+            font-size: 1.8em;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 30px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        h2 span.icon {
+            color: var(--primary-light);
         }
 
         .review-item {
-            background: #f8f9fa;
-            border-left: 5px solid #1e3c72;
-            padding: 25px;
-            margin-bottom: 25px;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border: 1px solid var(--border);
+            background: rgba(15, 23, 42, 0.3);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+            position: relative;
+            transition: border-color 0.2s ease;
         }
 
-        .review-item.critical {
-            border-left-color: #dc3545;
-            background: #fff5f5;
+        .review-item:hover {
+            border-color: var(--border);
         }
 
-        .review-item.warning {
-            border-left-color: #ffc107;
-            background: #fffbf0;
-        }
-
-        .review-item.info {
-            border-left-color: #17a2b8;
-            background: #f0f8f9;
-        }
+        .review-item.critical { border-left: 5px solid var(--critical); }
+        .review-item.warning { border-left: 5px solid var(--warning); }
+        .review-item.info { border-left: 5px solid var(--info); }
 
         .review-header {
             display: flex;
             align-items: center;
-            gap: 12px;
-            margin-bottom: 12px;
+            justify-content: space-between;
+            margin-bottom: 15px;
             flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .review-meta {
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .badge {
-            display: inline-block;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.8em;
+            font-size: 0.75em;
             font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 6px;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.05em;
         }
 
-        .badge.critical { background: #dc3545; color: white; }
-        .badge.warning { background: #ffc107; color: #333; }
-        .badge.info { background: #17a2b8; color: white; }
-        .badge.component { background: #1e3c72; color: white; text-transform: none; }
+        .badge.critical { background: var(--critical-bg); color: var(--critical); border: 1px solid var(--critical); }
+        .badge.warning { background: var(--warning-bg); color: var(--warning); border: 1px solid var(--warning); }
+        .badge.info { background: var(--info-bg); color: var(--info); border: 1px solid var(--info); }
+        .badge.component { background: var(--border); color: var(--text-muted); }
 
         .review-title {
-            font-size: 1.25em;
+            font-size: 1.3em;
             font-weight: 700;
-            color: #2d3748;
+            color: var(--text-main);
+        }
+
+        .review-location {
+            font-family: monospace;
+            font-size: 0.85em;
+            color: var(--primary-light);
+            background: rgba(79, 70, 229, 0.1);
+            padding: 2px 8px;
+            border-radius: 4px;
         }
 
         .review-section {
@@ -210,115 +298,144 @@
 
         .review-section-title {
             font-weight: 600;
-            color: #4a5568;
-            margin-bottom: 6px;
-            font-size: 0.95em;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
 
         .review-text {
+            color: #cbd5e1;
             font-size: 0.95em;
-            color: #4a5568;
-            margin-bottom: 12px;
+            margin-bottom: 15px;
         }
 
         .code-comparison {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1fr;
             gap: 20px;
-            margin: 15px 0;
+            margin: 20px 0;
         }
 
-        @media (max-width: 850px) {
-            .code-comparison { grid-template-columns: 1fr; }
+        @media (min-width: 992px) {
+            .code-comparison {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .comparison-col {
+            display: flex;
+            flex-direction: column;
         }
 
         .comparison-label {
-            font-size: 0.85em;
+            font-size: 0.8em;
             font-weight: 700;
             text-transform: uppercase;
             margin-bottom: 6px;
-            color: #4a5568;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
+
+        .comparison-label.before { color: var(--critical); }
+        .comparison-label.after { color: var(--success); }
 
         .code-block {
-            background: #1e1e1e;
-            color: #d4d4d4;
-            padding: 16px;
-            border-radius: 6px;
+            background: #0b0f19;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
             overflow-x: auto;
-            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-family: 'Consolas', 'Fira Code', 'Courier New', monospace;
             font-size: 0.85em;
             line-height: 1.5;
-            max-height: 350px;
+            border: 1px solid var(--border);
+            flex-grow: 1;
         }
 
-        .code-block.before { border-left: 4px solid #dc3545; }
-        .code-block.after { border-left: 4px solid #28a745; }
+        .code-block.before { border-left: 4px solid var(--critical); }
+        .code-block.after { border-left: 4px solid var(--success); }
 
-        .impact {
-            display: flex;
-            gap: 20px;
+        .impact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            background: rgba(15, 23, 42, 0.5);
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
             margin-top: 15px;
-            padding-top: 15px;
-            border-top: 1px solid rgba(0, 0, 0, 0.08);
-            flex-wrap: wrap;
         }
 
-        .impact-item { flex: 1; min-width: 150px; }
+        .impact-item {
+            display: flex;
+            flex-direction: column;
+        }
 
         .impact-label {
-            font-size: 0.8em;
+            font-size: 0.75em;
             font-weight: 700;
-            color: #1e3c72;
+            color: var(--text-muted);
             text-transform: uppercase;
         }
 
-        .impact-value { color: #4a5568; font-size: 0.95em; }
-
-        .matrix-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 15px;
-        }
-
-        .matrix-table th, .matrix-table td {
-            border: 1px solid #e9ecef;
-            padding: 12px 15px;
-            text-align: left;
-        }
-
-        .matrix-table th {
-            background-color: #f8f9fa;
-            color: #4a5568;
-            font-weight: 600;
-        }
-
-        .matrix-table tr:hover {
-            background-color: #f1f3f5;
+        .impact-value {
+            font-size: 0.9em;
+            color: var(--text-main);
+            font-weight: 500;
+            margin-top: 2px;
         }
 
         .roadmap-list {
-            list-style-position: inside;
-            margin-top: 15px;
+            list-style: none;
         }
 
-        .roadmap-list li {
-            margin-bottom: 12px;
-            color: #4a5568;
+        .roadmap-item {
+            display: flex;
+            gap: 20px;
+            padding: 20px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .roadmap-item:last-child {
+            border-bottom: none;
         }
 
         .roadmap-step {
-            font-weight: bold;
-            color: #1e3c72;
+            width: 32px;
+            height: 32px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .roadmap-content h3 {
+            font-size: 1.1em;
+            margin-bottom: 5px;
+        }
+
+        .roadmap-content p {
+            color: var(--text-muted);
+            font-size: 0.9em;
         }
 
         footer {
-            background: #f8f9fa;
-            padding: 25px 40px;
+            margin-top: 40px;
             text-align: center;
-            color: #6c757d;
-            border-top: 1px solid #e9ecef;
-            font-size: 0.9em;
+            color: var(--text-muted);
+            font-size: 0.85em;
+        }
+
+        footer p {
+            margin-bottom: 5px;
         }
     </style>
 </head>
@@ -326,437 +443,419 @@
     <div class="container">
         <header>
             <h1>📋 Relatório de Code Review</h1>
-            <p>Análise de Qualidade, Arquitetura MVC/BFF, SOLID, Clean Code e Validação de Requisitos</p>
+            <p>Análise de Qualidade, Arquitetura MVC/BFF, SOLID e Clean Code</p>
         </header>
 
         <div class="metadata">
             <div class="meta-item">
-                <div class="meta-label">Data</div>
+                <div class="meta-label">Data de Execução</div>
                 <div class="meta-value">21/07/2026</div>
             </div>
             <div class="meta-item">
-                <div class="meta-label">Escopo</div>
-                <div class="meta-value">Todo o projeto</div>
+                <div class="meta-label">Escopo Analisado</div>
+                <div class="meta-value">Todo o Projeto</div>
             </div>
             <div class="meta-item">
                 <div class="meta-label">Arquitetura</div>
-                <div class="meta-value">BFF / MVC</div>
+                <div class="meta-value">MVC / BFF (Spring Cloud Feign)</div>
             </div>
             <div class="meta-item">
-                <div class="meta-label">Linguagem / Stack</div>
-                <div class="meta-value">Java 17 / Spring Boot 3</div>
+                <div class="meta-label">Stack do Projeto</div>
+                <div class="meta-value">Java 21+ / Spring Boot 3.3.4</div>
             </div>
         </div>
 
         <nav>
-            <a href="#resumo">📊 Resumo</a>
-            <a href="#criticos">⚡ Críticos (5)</a>
-            <a href="#importantes">📝 Importantes (2)</a>
-            <a href="#sugestoes">💡 Sugestões (2)</a>
-            <a href="#proximos">➡️ Roadmap & Ação</a>
+            <a href="#resumo" class="active">📊 Resumo</a>
+            <a href="#criticos">⚡ Críticos</a>
+            <a href="#importantes">📝 Importantes</a>
+            <a href="#sugestoes">💡 Sugestões</a>
+            <a href="#roadmap">➡️ Plano de Ação</a>
         </nav>
 
-        <div class="content">
-            <section id="resumo">
-                <h2>Resumo Executivo</h2>
-                <div class="stats-grid">
-                    <div class="stat-card critical">
-                        <div class="stat-number">5</div>
-                        <div class="stat-label">Críticos (Erros de Compilação/Lógica)</div>
+        <section id="resumo">
+            <h2><span class="icon">📊</span> Resumo Executivo</h2>
+            <div class="stats-grid">
+                <div class="stat-card critical">
+                    <div class="stat-info">
+                        <h3>Achados Críticos</h3>
+                        <p>3</p>
                     </div>
-                    <div class="stat-card warning">
-                        <div class="stat-number">2</div>
-                        <div class="stat-label">Importantes (Arquitetura/Resiliência)</div>
-                    </div>
-                    <div class="stat-card info">
-                        <div class="stat-number">2</div>
-                        <div class="stat-label">Sugestões (Refatoração/Boas Práticas)</div>
-                    </div>
+                    <div class="stat-icon">⚡</div>
                 </div>
-                <div class="review-text" style="margin-top: 20px;">
-                    <p>A análise detalhada identificou que o projeto encontra-se atualmente com <strong>erros de compilação nos arquivos de teste unitário</strong>, impossibilitando builds e pipelines de CI/CD. Além disso, existe um desacoplamento entre as validações especificadas nos testes unitários e a implementação real no serviço. Foram encontrados problemas em convenções de nomenclatura e utilização errônea do padrão record do Java nos testes.</p>
+                <div class="stat-card warning">
+                    <div class="stat-info">
+                        <h3>Achados Importantes</h3>
+                        <p>2</p>
+                    </div>
+                    <div class="stat-icon">📝</div>
                 </div>
-            </section>
+                <div class="stat-card info">
+                    <div class="stat-info">
+                        <h3>Sugestões</h3>
+                        <p>1</p>
+                    </div>
+                    <div class="stat-icon">💡</div>
+                </div>
+            </div>
+            <div style="background: rgba(79, 70, 229, 0.1); border: 1px solid var(--primary); padding: 20px; border-radius: 12px; font-size: 0.95em;">
+                <strong>Visão Geral do QA:</strong> A aplicação implementa corretamente o consumo da API ViaCEP usando OpenFeign e realiza o filtro dos campos solicitados (IBGE, GIA, DDD, Siafe) através da definição seletiva de campos no record <code>ViaCepResponseDTO</code>. No entanto, foram encontradas severas inconsistências entre o comportamento real do código e as asserções de seus testes unitários correspondentes (quebras de build), além de acoplamento indevido de lógica de validação de negócio no construtor do Record DTO, impedindo o tratamento correto de CEPs gerais ou retornos de erros.
+            </div>
+        </section>
 
-            <section id="criticos">
-                <h2>⚡ Achados Críticos (5)</h2>
+        <section id="criticos">
+            <h2><span class="icon">⚡</span> Achados Críticos</h2>
 
-                <!-- Item 1: Falha de Compilação na Classe de Testes de Validadores -->
-                <div class="review-item critical">
-                    <div class="review-header">
+            <div class="review-item critical">
+                <div class="review-header">
+                    <div class="review-title">1. Acoplamento de Validação de Negócio e Lançamento de Exceções no Construtor do Record DTO</div>
+                    <div class="review-meta">
                         <span class="badge critical">Crítico</span>
-                        <span class="badge component">Tests / Utils</span>
-                        <div class="review-title">Falta de Implementação do método validaCep em Validadores</div>
+                        <span class="badge component">Model / DTO</span>
                     </div>
-                    <div class="review-text">
-                        <strong>Problema:</strong> O arquivo <code>ValidadoresTest.java</code> tenta invocar o método estático <code>Validadores.validaCep(String)</code>, contudo a classe utilitária <code>Validadores.java</code> está completamente vazia. Isso gera erros de compilação imediata ao tentar buildar ou rodar os testes.
-                    </div>
+                </div>
+                <div class="review-location">ViaCepResponseDTO.java (Linhas 12-18)</div>
+                
+                <div class="review-section">
+                    <div class="review-section-title">Problema</div>
+                    <p class="review-text">
+                        O construtor canônico do record lança <code>IllegalArgumentException("CEP não encontrado")</code> se o logradouro for nulo ou vazio. Isso gera dois problemas graves:
+                        <br>1. Viola a semântica de Records, que devem ser meros portadores de dados (data carriers) sem efeitos colaterais.
+                        <br>2. Impede a representação de CEPs válidos de municípios menores onde o logradouro é vazio de forma legítima. Além disso, quebra os testes unitários da classe <code>ViaCepResponseDTOTest</code> que verificavam o comportamento de manter nulo/vazio.
+                    </p>
+                </div>
+
+                <div class="review-section">
+                    <div class="review-section-title">Comparativo de Código (Antes x Depois)</div>
                     <div class="code-comparison">
-                        <div>
-                            <div class="comparison-label">Antes (Código Atual - Validadores.java)</div>
-                            <pre class="code-block before"><code>package com.desafio.casebackend.utils;
-
-public class Validadores {
-
-}</code></pre>
-                        </div>
-                        <div>
-                            <div class="comparison-label">Depois (Correção Sugerida - Validadores.java)</div>
-                            <pre class="code-block after"><code>package com.desafio.casebackend.utils;
-
-public class Validadores {
-    public static String validaCep(String cep) {
-        if (cep == null || cep.trim().isEmpty()) {
-            throw new IllegalArgumentException("O CEP não pode ser nulo nem estar em branco");
+                        <div class="comparison-col">
+                            <div class="comparison-label before">❌ Antes</div>
+                            <pre class="code-block before"><code>public record ViaCepResponseDTO(
+        String cep,
+        String logradouro,
+        String complemento,
+        String bairro,
+        String localidade
+) {
+    public ViaCepResponseDTO {
+        if(logradouro != null && !logradouro.isEmpty()) {
+            logradouro = logradouro.toLowerCase();
+        } else {
+            throw new IllegalArgumentException("CEP não encontrado");
         }
-        // Remove hífens se presentes para validação do tamanho de dígitos
-        String apenasNumeros = cep.replace("-", "");
-        if (!apenasNumeros.matches("\\d{8}")) {
-            throw new IllegalArgumentException("O CEP deve conter 8 caracteres numericos");
-        }
-        return cep; // Retorna o CEP validado
     }
 }</code></pre>
                         </div>
-                    </div>
-                    <div class="impact">
-                        <div class="impact-item">
-                            <div class="impact-label">Impacto</div>
-                            <div class="impact-value">Confiabilidade / Manutenibilidade (Erro de Compilação)</div>
-                        </div>
-                        <div class="impact-item">
-                            <div class="impact-label">Localização</div>
-                            <div class="impact-value">Validadores.java (Linha 3-5), ValidadoresTest.java (Várias)</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Item 2: Erro de Nomenclatura de Pacotes (Case Sensitivity) nos Imports de Teste -->
-                <div class="review-item critical">
-                    <div class="review-header">
-                        <span class="badge critical">Crítico</span>
-                        <span class="badge component">Tests</span>
-                        <div class="review-title">Importação de pacote DTOs inexistente (Case Sensitivity)</div>
-                    </div>
-                    <div class="review-text">
-                        <strong>Problema:</strong> Nos arquivos <code>ViaCepControllerTest.java</code> e <code>ViaCepServiceTest.java</code>, a DTO do ViaCep é importada do pacote <code>com.desafio.casebackend.DTOs.ViaCepResponseDTO</code> (com "DTOs" maiúsculo). Contudo, a pasta física e a declaração de pacote no arquivo DTO real são em minúsculo (<code>com.desafio.casebackend.dtos</code>). Isso impede a compilação em sistemas de arquivos case-sensitive (como Linux ou macOS utilizados em pipelines de CI).
-                    </div>
-                    <div class="code-comparison">
-                        <div>
-                            <div class="comparison-label">Antes (Em ViaCepServiceTest.java)</div>
-                            <pre class="code-block before"><code>import com.desafio.casebackend.DTOs.ViaCepResponseDTO; // Incorreto</code></pre>
-                        </div>
-                        <div>
-                            <div class="comparison-label">Depois (Correção Sugerida)</div>
-                            <pre class="code-block after"><code>import com.desafio.casebackend.dtos.ViaCepResponseDTO; // Correto</code></pre>
-                        </div>
-                    </div>
-                    <div class="impact">
-                        <div class="impact-item">
-                            <div class="impact-label">Impacto</div>
-                            <div class="impact-value">Portabilidade (Quebra compilação em CI/CD Linux)</div>
-                        </div>
-                        <div class="impact-item">
-                            <div class="impact-label">Localização</div>
-                            <div class="impact-value">ViaCepControllerTest.java (Linha 3), ViaCepServiceTest.java (Linha 3)</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Item 3: Conflito de Pacote com Classe em GlobalExceptionHandlerTest -->
-                <div class="review-item critical">
-                    <div class="review-header">
-                        <span class="badge critical">Crítico</span>
-                        <span class="badge component">Tests / Exceptions</span>
-                        <div class="review-title">Declaração de Pacote inválida em GlobalExceptionHandlerTest</div>
-                    </div>
-                    <div class="review-text">
-                        <strong>Problema:</strong> Na linha 1 de <code>GlobalExceptionHandlerTest.java</code>, o pacote está declarado como <code>package com.desafio.casebackend.exceptions.GlobalExceptionHandlerTest;</code>. O compilador Java rejeita isso porque o nome do subpacote coincide com o nome da classe física de testes, gerando erro grave de compilação. O correto é pertencer ao mesmo pacote correspondente à classe sob teste.
-                    </div>
-                    <div class="code-comparison">
-                        <div>
-                            <div class="comparison-label">Antes (GlobalExceptionHandlerTest.java)</div>
-                            <pre class="code-block before"><code>package com.desafio.casebackend.exceptions.GlobalExceptionHandlerTest;</code></pre>
-                        </div>
-                        <div>
-                            <div class="comparison-label">Depois (Correção)</div>
-                            <pre class="code-block after"><code>package com.desafio.casebackend.exceptions;</code></pre>
-                        </div>
-                    </div>
-                    <div class="impact">
-                        <div class="impact-item">
-                            <div class="impact-label">Impacto</div>
-                            <div class="impact-value">Confiabilidade (Não compila)</div>
-                        </div>
-                        <div class="impact-item">
-                            <div class="impact-label">Localização</div>
-                            <div class="impact-value">GlobalExceptionHandlerTest.java (Linha 1)</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Item 4: Uso de Getters Java Bean Inexistentes em Records do Java nos Testes -->
-                <div class="review-item critical">
-                    <div class="review-header">
-                        <span class="badge critical">Crítico</span>
-                        <span class="badge component">Tests</span>
-                        <div class="review-title">Uso incorreto de getters (getMessage, getPath) em ExceptionsDTO</div>
-                    </div>
-                    <div class="review-text">
-                        <strong>Problema:</strong> Em <code>GlobalExceptionHandlerTest.java</code>, a classe do teste tenta acessar as propriedades de <code>ExceptionsDTO</code> utilizando métodos estilo getter clássico do Java Beans (como <code>getMessage()</code>, <code>getPath()</code> e <code>getTimestamp()</code>) e uma classe inexistente chamada <code>ErrorResponse</code>. Contudo, <code>ExceptionsDTO</code> é um <strong>Record do Java</strong>, no qual os acessores gerados automaticamente são homônimos aos campos (ex: <code>message()</code>, <code>path()</code>, <code>timestamp()</code>).
-                    </div>
-                    <div class="code-comparison">
-                        <div>
-                            <div class="comparison-label">Antes (Em GlobalExceptionHandlerTest.java)</div>
-                            <pre class="code-block before"><code>ErrorResponse errorBody = response.getBody(); // Inexistente
-assertEquals(ERROR_MESSAGE, errorBody.getMessage()); 
-assertEquals(REQUEST_URI, errorBody.getPath());
-assertNotNull(errorBody.getTimestamp());</code></pre>
-                        </div>
-                        <div>
-                            <div class="comparison-label">Depois (Correção com Record Accessors e ExceptionsDTO)</div>
-                            <pre class="code-block after"><code>ExceptionsDTO errorBody = response.getBody(); // Correto
-assertNotNull(errorBody);
-assertEquals(ERROR_MESSAGE, errorBody.message()); // Correto
-assertEquals(REQUEST_URI, errorBody.path());      // Correto
-assertNotNull(errorBody.timestamp());            // Correto</code></pre>
-                        </div>
-                    </div>
-                    <div class="impact">
-                        <div class="impact-item">
-                            <div class="impact-label">Impacto</div>
-                            <div class="impact-value">Confiabilidade (Erro de compilação)</div>
-                        </div>
-                        <div class="impact-item">
-                            <div class="impact-label">Localização</div>
-                            <div class="impact-value">GlobalExceptionHandlerTest.java (Linhas 43-49, 64-67, 80, 92)</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Item 5: Falha lógica de Validação de CEP no Serviço (Incompatibilidade com os Testes) -->
-                <div class="review-item critical">
-                    <div class="review-header">
-                        <span class="badge critical">Crítico</span>
-                        <span class="badge component">Service</span>
-                        <div class="review-title">Ausência de validação de CEP na classe de serviço</div>
-                    </div>
-                    <div class="review-text">
-                        <strong>Problema:</strong> <code>ViaCepServiceTest.java</code> possui testes unitários afirmando que <code>ViaCepService.buscaPorCep</code> lança <code>IllegalArgumentException</code> caso o CEP seja nulo, vazio ou inválido. No entanto, o código em <code>ViaCepService.java</code> repassa a requisição diretamente para o client OpenFeign sem executar qualquer validação prévia. Se um CEP nulo ou com formato incorreto for fornecido, a exceção não será capturada pelo serviço conforme o teste prevê.
-                    </div>
-                    <div class="code-comparison">
-                        <div>
-                            <div class="comparison-label">Antes (ViaCepService.java)</div>
-                            <pre class="code-block before"><code>public ViaCepResponseDTO buscaPorCep(String cepString) {
-    return client.getEnderecoCep(cepString);
-}</code></pre>
-                        </div>
-                        <div>
-                            <div class="comparison-label">Depois (Correção Sugerida usando Validadores)</div>
-                            <pre class="code-block after"><code>public ViaCepResponseDTO buscaPorCep(String cepString) {
-    // Valida o CEP e lança exceções necessárias de negócio antes de chamar a API
-    String cepValidado = Validadores.validaCep(cepString);
-    return client.getEnderecoCep(cepValidado);
-}</code></pre>
-                        </div>
-                    </div>
-                    <div class="impact">
-                        <div class="impact-item">
-                            <div class="impact-label">Impacto</div>
-                            <div class="impact-value">Segurança / Tolerância a falhas (Chamada externa inútil)</div>
-                        </div>
-                        <div class="impact-item">
-                            <div class="impact-label">Localização</div>
-                            <div class="impact-value">ViaCepService.java (Linhas 19-22)</div>
-                        </div>
-                    </div>
-                </div>
-
-            </section>
-
-            <section id="importantes">
-                <h2>📝 Achados Importantes (2)</h2>
-
-                <!-- Item 6: Falha no Tratamento de Resposta Inexistente do ViaCEP (erro = true) -->
-                <div class="review-item warning">
-                    <div class="review-header">
-                        <span class="badge warning">Importante</span>
-                        <span class="badge component">Service / Error Handler</span>
-                        <div class="review-title">Ausência de tratamento para CEP não cadastrado (ViaCEP "erro": true)</div>
-                    </div>
-                    <div class="review-text">
-                        <strong>Problema:</strong> A API do ViaCEP responde com status HTTP <code>200 OK</code> e corpo contendo <code>{"erro": "true"}</code> quando o CEP pesquisado não existe na base dos Correios. A aplicação atual não faz essa verificação no DTO ou no Serviço, resultando em dados vazios/nulos sendo passados à frente, o que pode causar falhas em cascata no BFF ou ao gerente de consignados ao tentar comparar os dados com o histórico.
-                    </div>
-                    <div class="code-comparison">
-                        <div>
-                            <div class="comparison-label">Melhoria Sugerida (ViaCepResponseDTO)</div>
+                        <div class="comparison-col">
+                            <div class="comparison-label after">c10003; Depois (Sugerido)</div>
                             <pre class="code-block after"><code>public record ViaCepResponseDTO(
         String cep,
         String logradouro,
         String complemento,
         String bairro,
         String localidade,
-        Boolean erro // Adicionar mapeamento do campo de erro
+        Boolean erro
 ) {
     public ViaCepResponseDTO {
-        if(logradouro != null && !logradouro.isEmpty()) {
+        if (logradouro != null) {
             logradouro = logradouro.toLowerCase();
         }
     }
 }</code></pre>
                         </div>
-                        <div>
-                            <div class="comparison-label">Melhoria no Serviço (ViaCepService.java)</div>
-                            <pre class="code-block after"><code>public ViaCepResponseDTO buscaPorCep(String cepString) {
-    String cepValidado = Validadores.validaCep(cepString);
-    ViaCepResponseDTO response = client.getEnderecoCep(cepValidado);
+                    </div>
+                </div>
+
+                <div class="impact-grid">
+                    <div class="impact-item">
+                        <span class="impact-label">Impacto Técnico</span>
+                        <span class="impact-value">Acoplamento alto e quebra de regras de negócio para CEPs gerais.</span>
+                    </div>
+                    <div class="impact-item">
+                        <span class="impact-label">Atributos Afetados</span>
+                        <span class="impact-value">Manutenibilidade, Confiabilidade, Testabilidade</span>
+                    </div>
+                    <div class="impact-item">
+                        <span class="impact-label">Esforço de Correção</span>
+                        <span class="impact-value">Baixo (Remoção da validação para o Service)</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="review-item critical">
+                <div class="review-header">
+                    <div class="review-title">2. Divergência Completa entre Serviço e Testes Unitários (Validações Ausentes)</div>
+                    <div class="review-meta">
+                        <span class="badge critical">Crítico</span>
+                        <span class="badge component">Service / Tests</span>
+                    </div>
+                </div>
+                <div class="review-location">ViaCepService.java (Linhas 16-19) e ViaCepServiceTest.java</div>
+                
+                <div class="review-section">
+                    <div class="review-section-title">Problema</div>
+                    <p class="review-text">
+                        A classe <code>ViaCepService</code> não realiza qualquer validação de entrada de CEP (nulo, vazio, ou formato inválido) nem tratamento de erros para CEP não encontrado. Entretanto, seus testes unitários correspondentes (<code>ViaCepServiceTest</code>) testam exaustivamente se esses cenários lançam <code>IllegalArgumentException</code>. Com isso, os testes do serviço falham ao serem executados na build, impossibilitando uma integração contínua (CI) verde.
+                    </p>
+                </div>
+
+                <div class="review-section">
+                    <div class="review-section-title">Comparativo de Código (Antes x Depois)</div>
+                    <div class="code-comparison">
+                        <div class="comparison-col">
+                            <div class="comparison-label before">❌ Antes</div>
+                            <pre class="code-block before"><code>public ViaCepResponseDTO buscaPorCep(String cep) {
+    return client.getEnderecoCep(cep);
+}</code></pre>
+                        </div>
+                        <div class="comparison-col">
+                            <div class="comparison-label after">c10003; Depois (Sugerido)</div>
+                            <pre class="code-block after"><code>public ViaCepResponseDTO buscaPorCep(String cep) {
+    if (cep == null || cep.trim().isEmpty()) {
+        throw new IllegalArgumentException("O CEP não pode ser nulo nem estar em branco");
+    }
     
-    if (response == null || Boolean.TRUE.equals(response.erro())) {
-        throw new IllegalArgumentException("O CEP informado não foi encontrado");
+    String cleanCep = cep.replace("-", "");
+    if (!cleanCep.matches("\\d{8}")) {
+        throw new IllegalArgumentException("O CEP deve conter 8 caracteres numericos");
+    }
+
+    ViaCepResponseDTO response = client.getEnderecoCep(cep);
+    if (response == null || (response.erro() != null && response.erro())) {
+        throw new IllegalArgumentException("CEP não encontrado");
     }
     return response;
 }</code></pre>
                         </div>
                     </div>
-                    <div class="impact">
-                        <div class="impact-item">
-                            <div class="impact-label">Impacto</div>
-                            <div class="impact-value">Confiabilidade / Usabilidade (Retorno inconsistente)</div>
-                        </div>
-                        <div class="impact-item">
-                            <div class="impact-label">Localização</div>
-                            <div class="impact-value">ViaCepResponseDTO.java, ViaCepService.java</div>
-                        </div>
-                    </div>
                 </div>
 
-                <!-- Item 7: Ausência de Timeouts e Fallbacks no Client OpenFeign -->
-                <div class="review-item warning">
-                    <div class="review-header">
+                <div class="impact-grid">
+                    <div class="impact-item">
+                        <span class="impact-label">Impacto Técnico</span>
+                        <span class="impact-value">Testes unitários quebrados e falhas silenciosas na validação de formato.</span>
+                    </div>
+                    <div class="impact-item">
+                        <span class="impact-label">Atributos Afetados</span>
+                        <span class="impact-value">Testabilidade, Confiabilidade</span>
+                    </div>
+                    <div class="impact-item">
+                        <span class="impact-label">Esforço de Correção</span>
+                        <span class="impact-value">Médio (Ajustar o serviço e adicionar validações)</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="review-item critical">
+                <div class="review-header">
+                    <div class="review-title">3. Falha de Execução de Mockito em Ambientes de JDK Modernos (JDK 21/24)</div>
+                    <div class="review-meta">
+                        <span class="badge critical">Crítico</span>
+                        <span class="badge component">Tests / Infra</span>
+                    </div>
+                </div>
+                <div class="review-location">Pom.xml & Configuração do Surefire</div>
+                
+                <div class="review-section">
+                    <div class="review-section-title">Problema</div>
+                    <p class="review-text">
+                        A execução dos testes unitários utilizando Mockito falha por padrão no JDK 24 (e gera avisos sérios no JDK 21) devido a restrições de carregamento dinâmico de agentes nativos da JVM. O Mockito tenta instanciar inline mocks e é bloqueado. Para contornar e estabilizar os testes, precisamos declarar explicitamente o uso do <code>subclass</code> mockmaker nas configurações de teste ou passar parâmetros na JVM.
+                    </p>
+                </div>
+
+                <div class="review-section">
+                    <div class="review-section-title">Solução Sugerida</div>
+                    <p class="review-text">
+                        Criar o arquivo de configuração <code>src/test/resources/mockito-extensions/org.mockito.plugins.MockMaker</code> contendo <code>mock-maker-subclass</code>. Isso desativa a tentativa de inline mocking que gera o erro do dynamic agent loading.
+                    </p>
+                </div>
+
+                <div class="impact-grid">
+                    <div class="impact-item">
+                        <span class="impact-label">Impacto Técnico</span>
+                        <span class="impact-value">Falha geral na build do Maven que impede a validação automatizada.</span>
+                    </div>
+                    <div class="impact-item">
+                        <span class="impact-label">Atributos Afetados</span>
+                        <span class="impact-value">Portabilidade, Confiabilidade da Build</span>
+                    </div>
+                    <div class="impact-item">
+                        <span class="impact-label">Esforço de Correção</span>
+                        <span class="impact-value">Baixo (Arquivo de configuração de Mockito criado com sucesso)</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="importantes">
+            <h2><span class="icon">📝</span> Achados Importantes</h2>
+
+            <div class="review-item warning">
+                <div class="review-header">
+                    <div class="review-title">1. Testes de Controller Frágeis (Ausência de MockMvc)</div>
+                    <div class="review-meta">
                         <span class="badge warning">Importante</span>
+                        <span class="badge component">Controller / Tests</span>
+                    </div>
+                </div>
+                <div class="review-location">ViaCepControllerTest.java</div>
+                
+                <div class="review-section">
+                    <div class="review-section-title">Problema</div>
+                    <p class="review-text">
+                        O teste atual do controlador (<code>shouldReturnAddressWhenCepIsValid</code>) instancia o controlador diretamente como um objeto Java puro. Com isso, não são validadas as regras HTTP do Spring MVC, as rotas do endpoint (<code>/viacep/{cep}</code>), nem as validações do Bean Validation aplicadas via anotações como <code>@NotBlank</code> e <code>@Pattern</code> no parâmetro do endpoint.
+                    </p>
+                </div>
+
+                <div class="review-section">
+                    <div class="review-section-title">Solução Sugerida</div>
+                    <p class="review-text">
+                        Refatorar a classe <code>ViaCepControllerTest</code> para utilizar <code>@WebMvcTest(ViaCepController.class)</code> injetando <code>MockMvc</code>. Isso permite testar as validações de input, as respostas de código de status HTTP reais e o mapeamento adequado de rotas.
+                    </p>
+                </div>
+
+                <div class="impact-grid">
+                    <div class="impact-item">
+                        <span class="impact-label">Impacto Técnico</span>
+                        <span class="impact-value">Validadores de CEP em anotações no Controller podem ser bypassados sem testes de regressão correspondentes.</span>
+                    </div>
+                    <div class="impact-item">
+                        <span class="impact-label">Atributos Afetados</span>
+                        <span class="impact-value">Testabilidade, Segurança de Entrada</span>
+                    </div>
+                    <div class="impact-item">
+                        <span class="impact-label">Esforço de Correção</span>
+                        <span class="impact-value">Médio</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="review-item warning">
+                <div class="review-header">
+                    <div class="review-title">2. Tratamento Inadequado de Exceções de APIs Parceiras (FeignException)</div>
+                    <div class="review-meta">
+                        <span class="badge warning">Importante</span>
+                        <span class="badge component">Error Handler</span>
+                    </div>
+                </div>
+                <div class="review-location">GlobalExceptionHandler.java</div>
+                
+                <div class="review-section">
+                    <div class="review-section-title">Problema</div>
+                    <p class="review-text">
+                        O <code>GlobalExceptionHandler</code> captura <code>NullPointerException</code> e o traduz para um Bad Request. Capturar NPE é uma má prática de Clean Code que pode camuflar falhas reais da aplicação. Além disso, não há tratamento específico para exceções lançadas pelo Feign Client (<code>feign.FeignException</code>). Caso o serviço ViaCEP esteja inoperante ou retorne um erro HTTP não tratado, a aplicação vai expor o erro bruto em 500 sem uma formatação limpa e amigável para o cliente do BFF.
+                    </p>
+                </div>
+
+                <div class="review-section">
+                    <div class="review-section-title">Solução Sugerida</div>
+                    <p class="review-text">
+                        1. Remover a captura de <code>NullPointerException</code> e focar no tratamento adequado do fluxo de dados.
+                        <br>2. Implementar um método tratador de exceção para <code>FeignException</code>, formatando a resposta de erro com o DTO padronizado e indicando o status correspondente (ex: 502 Bad Gateway para falhas na API parceira).
+                    </p>
+                </div>
+
+                <div class="impact-grid">
+                    <div class="impact-item">
+                        <span class="impact-label">Impacto Técnico</span>
+                        <span class="impact-value">Vazamento de stack traces e respostas não padronizadas no BFF em caso de falha da API integrada.</span>
+                    </div>
+                    <div class="impact-item">
+                        <span class="impact-label">Atributos Afetados</span>
+                        <span class="impact-value">Confiabilidade, Resiliência, Robustez</span>
+                    </div>
+                    <div class="impact-item">
+                        <span class="impact-label">Esforço de Correção</span>
+                        <span class="impact-value">Médio</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="sugestoes">
+            <h2><span class="icon">💡</span> Sugestões de Melhoria</h2>
+
+            <div class="review-item info">
+                <div class="review-header">
+                    <div class="review-title">1. Configuração de Timeouts e Resiliência no Feign Client</div>
+                    <div class="review-meta">
+                        <span class="badge info">Sugestão</span>
                         <span class="badge component">BFF / Client</span>
-                        <div class="review-title">Feign Client sem configuração de Resiliência (Timeout / Circuit Breaker)</div>
-                    </div>
-                    <div class="review-text">
-                        <strong>Problema:</strong> O client <code>ViaCepClient</code> consome um serviço público terceiro (ViaCEP) sem configuração explícita de timeout ou fallbacks. Se a API externa sofrer lentidão severa ou indisponibilidade, as requisições na aplicação local ficarão travadas até que as threads do servidor de aplicação esgotem-se, derrubando o sistema.
-                    </div>
-                    <div class="code-comparison">
-                        <div>
-                            <div class="comparison-label">Exemplo de Configuração recomendada (application.yml)</div>
-                            <pre class="code-block after"><code>spring:
-  cloud:
-    openfeign:
-      client:
-        config:
-          viacep:
-            connectTimeout: 2000 # 2 segundos
-            readTimeout: 4000    # 4 segundos</code></pre>
-                        </div>
-                    </div>
-                    <div class="impact">
-                        <div class="impact-item">
-                            <div class="impact-label">Impacto</div>
-                            <div class="impact-value">Resiliência / Disponibilidade do BFF</div>
-                        </div>
-                        <div class="impact-item">
-                            <div class="impact-label">Localização</div>
-                            <div class="impact-value">ViaCepClient.java</div>
-                        </div>
                     </div>
                 </div>
-
-            </section>
-
-            <section id="sugestoes">
-                <h2>💡 Sugestões de Melhoria (2)</h2>
-
-                <div class="review-item info">
-                    <div class="review-header">
-                        <span class="badge info">Sugestão</span>
-                        <span class="badge component">Exceptions</span>
-                        <div class="review-title">Substituir NullPointerException e criar exceções específicas de negócio</div>
-                    </div>
-                    <div class="review-text">
-                        <strong>Melhoria:</strong> O <code>GlobalExceptionHandler</code> mapeia <code>NullPointerException</code> para retornar o texto "Cep invalido". O uso de <code>NullPointerException</code> para tratar regras de negócio ou validações é desencorajado por ser uma exceção de runtime muito genérica. Recomenda-se criar exceções personalizadas (ex: <code>CepInvalidoException</code> ou <code>CepNaoEncontradoException</code>) estendendo de <code>RuntimeException</code>.
-                    </div>
-                    <div class="impact">
-                        <div class="impact-item">
-                            <div class="impact-label">Impacto</div>
-                            <div class="impact-value">Manutenibilidade / Clean Code</div>
-                        </div>
-                    </div>
+                <div class="review-location">ViaCepClient.java</div>
+                
+                <div class="review-section">
+                    <div class="review-section-title">Descrição</div>
+                    <p class="review-text">
+                        A interface do Feign Client não possui nenhuma configuração de timeout para conexão (Connect Timeout) ou para leitura dos dados (Read Timeout). Por padrão, dependendo das configurações do Feign, a aplicação pode aguardar tempo indeterminado caso a API do ViaCEP trave ou tenha lentidão extrema.
+                    </p>
                 </div>
 
-                <div class="review-item info">
-                    <div class="review-header">
-                        <span class="badge info">Sugestão</span>
-                        <span class="badge component">Controller</span>
-                        <div class="review-title">Remover duplicação de validação por regex</div>
-                    </div>
-                    <div class="review-text">
-                        <strong>Melhoria:</strong> A validação de Regex por pattern de CEP no <code>ViaCepController</code> (<code>@Pattern(regexp = "\\d{5}-?\\d{3}")</code>) valida o CEP no nível HTTP, mas a regra de negócio e tamanho também são testados no nível de serviço e utilitário. O ideal é centralizar a expressão regular de validação do formato do CEP em um só lugar (por exemplo, na classe <code>Validadores</code>) para evitar inconsistência de formato caso as regras mudem futuramente.
-                    </div>
-                    <div class="impact">
-                        <div class="impact-item">
-                            <div class="impact-label">Impacto</div>
-                            <div class="impact-value">Manutenibilidade (DRY - Don't Repeat Yourself)</div>
-                        </div>
-                    </div>
+                <div class="review-section">
+                    <div class="review-section-title">Solução Recomendada</div>
+                    <p class="review-text">
+                        Definir os timeouts padrão do Feign no arquivo <code>application.properties</code>:
+                        <pre style="background: #0b0f19; padding: 12px; border-radius: 6px; font-family: monospace; border: 1px solid var(--border); font-size: 0.85em; margin-top: 5px;">
+feign.client.config.default.connectTimeout=3000
+feign.client.config.default.readTimeout=3000</pre>
+                    </p>
                 </div>
-            </section>
 
-            <section id="proximos">
-                <h2>➡️ Roadmap de Correção & Próximos Passos</h2>
-                <div class="review-text">
-                    <p>Abaixo está a matriz de priorização de esforço para sanar os débitos técnicos identificados.</p>
+                <div class="impact-grid">
+                    <div class="impact-item">
+                        <span class="impact-label">Impacto Técnico</span>
+                        <span class="impact-value">Aumenta a estabilidade geral da aplicação sob falhas do sistema integrado.</span>
+                    </div>
+                    <div class="impact-item">
+                        <span class="impact-label">Atributos Afetados</span>
+                        <span class="impact-value">Performance, Resiliência</span>
+                    </div>
+                    <div class="impact-item">
+                        <span class="impact-label">Esforço de Correção</span>
+                        <span class="impact-value">Muito Baixo</span>
+                    </div>
                 </div>
-                <table class="matrix-table">
-                    <thead>
-                        <tr>
-                            <th>Tarefa</th>
-                            <th>Prioridade</th>
-                            <th>Esforço Estimado</th>
-                            <th>Descrição</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>1. Implementação de Validadores.validaCep</strong></td>
-                            <td><span class="badge critical">Crítico</span></td>
-                            <td>Baixo (15 mins)</td>
-                            <td>Implementar a lógica na classe utilitária para resolver o build quebrado.</td>
-                        </tr>
-                        <tr>
-                            <td><strong>2. Correção de Imports e Naming nos Testes</strong></td>
-                            <td><span class="badge critical">Crítico</span></td>
-                            <td>Baixo (10 mins)</td>
-                            <td>Corrigir case-sensitivity (DTOs -> dtos), pacote clashing e records getters.</td>
-                        </tr>
-                        <tr>
-                            <td><strong>3. Ajustar validação em ViaCepService</strong></td>
-                            <td><span class="badge critical">Crítico</span></td>
-                            <td>Baixo (10 mins)</td>
-                            <td>Chamar a validação antes do Feign para alinhar a implementação com o que é testado.</td>
-                        </tr>
-                        <tr>
-                            <td><strong>4. Tratamento do erro=true do ViaCEP</strong></td>
-                            <td><span class="badge warning">Importante</span></td>
-                            <td>Médio (20 mins)</td>
-                            <td>Mapear o campo erro no DTO e lançar exceção customizada se o CEP não existir.</td>
-                        </tr>
-                        <tr>
-                            <td><strong>5. Configurar timeouts do Feign</strong></td>
-                            <td><span class="badge warning">Importante</span></td>
-                            <td>Baixo (10 mins)</td>
-                            <td>Adicionar limites de resposta para a API dos Correios.</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </section>
-        </div>
+            </div>
+        </section>
+
+        <section id="roadmap">
+            <h2><span class="icon">➡️</span> Plano de Ação & Roadmap de Melhorias</h2>
+            <ul class="roadmap-list">
+                <li class="roadmap-item">
+                    <div class="roadmap-step">1</div>
+                    <div class="roadmap-content">
+                        <h3>Ajustar Construtor do DTO (ViaCepResponseDTO)</h3>
+                        <p>Remover o lançamento da exceção do construtor canônico. Evitar que o record tenha lógica de negócio e permitir logradouros nulos/vazios sem crashes.</p>
+                    </div>
+                </li>
+                <li class="roadmap-item">
+                    <div class="roadmap-step">2</div>
+                    <div class="roadmap-content">
+                        <h3>Implementar Validações no Serviço (ViaCepService)</h3>
+                        <p>Adicionar validação de nulo, vazio e formato do CEP antes da chamada do Feign. Implementar a checagem da flag <code>erro</code> vinda da resposta do ViaCEP.</p>
+                    </div>
+                </li>
+                <li class="roadmap-item">
+                    <div class="roadmap-step">3</div>
+                    <div class="roadmap-content">
+                        <h3>Aprimorar o Tratador Global de Exceções</h3>
+                        <p>Remover o tratamento genérico de <code>NullPointerException</code> e adicionar interceptores para anotações de validação de rota e exceções de chamadas de rede externas (FeignException).</p>
+                    </div>
+                </li>
+                <li class="roadmap-item">
+                    <div class="roadmap-step">4</div>
+                    <div class="roadmap-content">
+                        <h3>Refatorar Testes do Controller para Usar MockMvc</h3>
+                        <p>Substituir o teste manual do controller por testes web que usem MockMvc, testando de ponta a ponta as validações de input nos endpoints de entrada do BFF.</p>
+                    </div>
+                </li>
+            </ul>
+        </section>
 
         <footer>
-            Gerado automaticamente por Code Review Skill • Agentic AI
+            <p>Relatório gerado em: 21 de Julho de 2026 • Code Review Tooling</p>
+            <p>Projeto: Desafio Junior Backend | Antigravity AI Coding Companion</p>
         </footer>
     </div>
 </body>

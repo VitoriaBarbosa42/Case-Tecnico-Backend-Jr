@@ -411,6 +411,16 @@ curl -X GET "http://localhost:8080/viacep/"
 
 ---
 
+## 🧰 Ferramentas de Automação & Skills do Projeto
+
+Este repositório possui suporte a automações baseadas em agentes AI localizadas em `.agents/skills/`. Os desenvolvedores podem usá-las para auditoria e relatórios rápidos:
+
+- 🔍 **code-review**: Analisa a conformidade SOLID, Clean Code e MVC, gerando relatórios em [code-review-report.html](file:///c:/Users/vitor/Downloads/case-jr/Case-Tecnico-Backend-Jr/report-review/code-review-report.html).
+- 🛡️ **unit-testing**: Executa o diagnóstico da qualidade e cobertura de testes, gerando relatórios em `desafio-junior/report-testes/unit-testing-report.html`.
+- 📚 **criar-docs**: Técnico de Documentação para gerar relatórios e manter o README, produzindo o interativo [documentation-report.html](file:///c:/Users/vitor/Downloads/case-jr/Case-Tecnico-Backend-Jr/report-docs/documentation-report.html).
+
+---
+
 ## 📚 Recursos Adicionais
 
 - [ViaCEP Documentation](https://viacep.com.br/)

@@ -7,13 +7,16 @@ public record ViaCepResponseDTO(
         String logradouro,
         String complemento,
         String bairro,
-        String localidade
+        String localidade,
+        Boolean erro
 ) {
     public ViaCepResponseDTO {
-        if(logradouro != null && !logradouro.isEmpty()) {
+        if(logradouro != null) {
             logradouro = logradouro.toLowerCase();
-        } else {
-            throw new IllegalArgumentException("CEP não encontrado");
         }
+    }
+
+    public ViaCepResponseDTO(String cep, String logradouro, String complemento, String bairro, String localidade) {
+        this(cep, logradouro, complemento, bairro, localidade, false);
     }
 }

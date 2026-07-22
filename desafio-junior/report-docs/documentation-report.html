@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentação Técnica - BFF ViaCEP</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-light: #60a5fa;
+            --primary-dark: #1d4ed8;
+            --bg-sidebar: #0f172a;
+            --bg-main: #f8fafc;
+            --text-title: #0f172a;
+            --text-body: #334155;
+            --text-sidebar: #cbd5e1;
+            --border: #e2e8f0;
+            --code-bg: #1e293b;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-main);
+            color: var(--text-body);
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Navigation */
+        sidebar {
+            width: 280px;
+            background: var(--bg-sidebar);
+            color: var(--text-sidebar);
+            padding: 40px 24px;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        sidebar h2 {
+            font-size: 1.1em;
+            font-weight: 800;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            margin-bottom: 25px;
+            color: var(--primary-light);
+        }
+
+        sidebar ul { list-style: none; }
+        
+        sidebar li { margin-bottom: 14px; }
+        
+        sidebar a {
+            color: var(--text-sidebar);
+            text-decoration: none;
+            font-size: 0.95em;
+            font-weight: 500;
+            display: block;
+            padding: 6px 12px;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+        }
+        
+        sidebar a:hover {
+            color: white;
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        /* Main Content */
+        main {
+            margin-left: 280px;
+            padding: 60px 50px;
+            flex: 1;
+            max-width: 1000px;
+        }
+
+        .header-card {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.25);
+        }
+
+        .header-card h1 {
+            font-size: 2.5em;
+            font-weight: 800;
+            margin-bottom: 10px;
+            letter-spacing: -0.02em;
+        }
+        
+        .header-card p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        section {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(15, 23, 42, 0.03);
+            border: 1px solid var(--border);
+        }
+
+        h2 {
+            font-size: 1.6em;
+            color: var(--text-title);
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 10px;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+        }
+        
+        h3 {
+            font-size: 1.25em;
+            color: var(--text-title);
+            margin: 25px 0 12px 0;
+            font-weight: 600;
+        }
+
+        p {
+            margin-bottom: 15px;
+            line-height: 1.7;
+        }
+
+        ul, ol {
+            margin-bottom: 20px;
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+            line-height: 1.7;
+        }
+
+        .code-block {
+            background: var(--code-bg);
+            color: #f8fafc;
+            padding: 18px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Consolas', 'Fira Code', 'Courier New', monospace;
+            font-size: 0.88em;
+            line-height: 1.5;
+            margin: 20px 0;
+            border: 1px solid #334155;
+        }
+
+        .pill {
+            display: inline-block;
+            background: #dbeafe;
+            color: var(--primary);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: 600;
+            margin-right: 8px;
+            border: 1px solid #bfdbfe;
+        }
+
+        .step-list { list-style: none; counter-reset: step-counter; }
+        
+        .step-list li {
+            position: relative;
+            padding-left: 50px;
+            margin-bottom: 30px;
+        }
+        
+        .step-list li::before {
+            content: counter(step-counter);
+            counter-increment: step-counter;
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 34px;
+            height: 34px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            box-shadow: 0 4px 10px rgba(37, 99, 235, 0.2);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 0.95em;
+        }
+        
+        th, td { padding: 14px; text-align: left; border-bottom: 1px solid var(--border); }
+        
+        th { background: #f1f5f9; color: var(--text-title); font-weight: 600; }
+
+        .alert-box {
+            background: #eff6ff;
+            border-left: 4px solid var(--primary);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .alert-box h4 {
+            color: var(--primary-dark);
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .alert-box p {
+            margin-bottom: 0;
+            font-size: 0.95em;
+        }
+
+        footer {
+            margin-top: 40px;
+            text-align: center;
+            color: #94a3b8;
+            font-size: 0.85em;
+        }
+    </style>
+</head>
+<body>
+    <sidebar>
+        <h2>📖 Documentação</h2>
+        <ul>
+            <li><a href="#visao-geral">Visão Geral</a></li>
+            <li><a href="#refinamento">Refinamento Técnico</a></li>
+            <li><a href="#quickstart">Como Executar</a></li>
+            <li><a href="#arquitetura">Arquitetura & Decisões</a></li>
+            <li><a href="#skills">Guia de Skills</a></li>
+            <li><a href="#testes">Execução de Testes</a></li>
+        </ul>
+    </sidebar>
+
+    <main>
+        <div class="header-card">
+            <h1>📘 Documentação Técnica do Projeto</h1>
+            <p>Guia Completo de Instalação, Arquitetura e Decisões de Desenvolvimento</p>
+        </div>
+
+        <section id="visao-geral">
+            <h2>Visão Geral</h2>
+            <p>O projeto consiste em uma aplicação backend desenvolvida com <strong>Java 21 e Spring Boot 3.3.4</strong>. Ela atua como um <strong>BFF (Backend for Frontend)</strong> de integração com a API pública do <strong>ViaCEP</strong>.</p>
+            <p>Seu principal objetivo de negócio é servir como um canal de consulta rápida de endereços para gerentes de consignado na rede de agências, permitindo validar de forma consistente se o endereço fornecido pelo cliente condiz com seu histórico no banco de dados durante a venda de produtos.</p>
+            <h3>Funcionalidades Principais</h3>
+            <ul>
+                <li><span class="pill">READ</span> Leitura estruturada de informações de logradouro via CEP.</li>
+                <li><span class="pill">Sanitização</span> Remoção de campos desnecessários ao caso de uso (<code>ibge</code>, <code>gia</code>, <code>ddd</code> e <code>siafe</code>).</li>
+                <li><span class="pill">Normalização</span> Conversão do campo <code>logradouro</code> para lowercase (letras minúsculas).</li>
+                <li><span class="pill">Robustez</span> Tratamento de erros centralizado com respostas em JSON estruturado para CEPs inválidos e inexistentes.</li>
+            </ul>
+        </section>
+
+        <section id="refinamento">
+            <h2>Refinamento Técnico</h2>
+            <p>As especificações de negócio foram baseadas nas regras de refinamento técnico acordadas:</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Requisito</th>
+                        <th>Detalhe da Implementação</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Integração com API Externa</strong></td>
+                        <td>Consumo do endpoint <code>https://viacep.com.br/ws/{cep}/json/</code> usando Spring Cloud OpenFeign.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Exclusão de Campos</strong></td>
+                        <td>Os campos <code>ibge</code>, <code>gia</code>, <code>ddd</code> e <code>siafe</code> são omitidos da resposta retornada ao cliente.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Modificação de Dados</strong></td>
+                        <td>O campo <code>logradouro</code> deve ser retornado em minúsculas (lowercase).</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Validação do CEP</strong></td>
+                        <td>A entrada é higienizada (remoção de hífens) e validada em relação a hífens e tamanho exato de 8 dígitos numéricos.</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="alert-box">
+                <h4>Contexto do Gerente de Consignado</h4>
+                <p>O gerente consultivo utiliza essa API durante a venda do produto para checar e registrar se o endereço informado pelo cliente bate com as bases cadastrais históricas do banco, mitigando fraudes e inconsistências de correspondência.</p>
+            </div>
+        </section>
+
+        <section id="quickstart">
+            <h2>🚀 Como Baixar e Executar Localmente</h2>
+            <ol class="step-list">
+                <li>
+                    <h3>Clonar o Repositório</h3>
+                    <p>Faça o download do código-fonte para o seu ambiente local:</p>
+                    <div class="code-block">git clone https://github.com/VitoriaBarbosa42/Case-Tecnico-Backend-Jr.git
+cd Case-Tecnico-Backend-Jr/desafio-junior</div>
+                </li>
+                <li>
+                    <h3>Compilar e Testar</h3>
+                    <p>Compile a aplicação e execute os testes automatizados com o Maven Wrapper:</p>
+                    <div class="code-block">./mvnw clean test</div>
+                </li>
+                <li>
+                    <h3>Executar a Aplicação</h3>
+                    <p>Suba o servidor Spring Boot local na porta padrão <code>8080</code>:</p>
+                    <div class="code-block">./mvnw spring-boot:run</div>
+                    <p><em>No Windows, utilize <code>mvnw.cmd</code> em vez de <code>./mvnw</code>.</em></p>
+                </li>
+                <li>
+                    <h3>Testar Endpoints no Navegador</h3>
+                    <p>Acesse o endpoint de busca de CEP localmente em seu navegador:</p>
+                    <div class="code-block"><a href="http://localhost:8080/viacep/01001-000" target="_blank" style="color: #60a5fa; text-decoration: none;">http://localhost:8080/viacep/01001-000</a></div>
+                </li>
+            </ol>
+        </section>
+
+        <section id="arquitetura">
+            <h2>🏛️ Arquitetura & Decisões ("O Porquê")</h2>
+            <p>O sistema foi estruturado seguindo as boas práticas da arquitetura **BFF (Backend for Frontend)** e **MVC (Model-View-Controller)**.</p>
+            
+            <h3>1. Spring Cloud OpenFeign</h3>
+            <p>Em vez de configurar <code>RestTemplate</code> ou <code>WebClient</code> de forma manual, optou-se pelo <strong>OpenFeign</strong> por ser declarativo, de simples leitura e facilitar o acoplamento dinâmico de configurações de timeouts e fallbacks, além de reduzir drasticamente o código boilerplate.</p>
+
+            <h3>2. Java Records (DTOs)</h3>
+            <p>Utilizados para modelar o DTO de entrada/saída (<code>ViaCepResponseDTO</code> e <code>ExceptionsDTO</code>). Garante a imutabilidade por design, gerando automaticamente getters, equals, hashCode e toString, além de permitir o processamento automático da string de logradouro para lowercase de forma transparente.</p>
+
+            <h3>3. Validação Centralizada e Tratamento Global</h3>
+            <p>As validações de input são definidas no Controller via Bean Validation (<code>@NotBlank</code>, <code>@Pattern</code>) e complementadas de forma robusta na camada de Service para garantir o isolamento das regras. O <code>GlobalExceptionHandler</code> intercepta as falhas para retornar respostas consistentes e padronizadas em formato JSON (contendo timestamp, status, erro amigável, mensagem e caminho da requisição).</p>
+        </section>
+
+        <section id="skills">
+            <h2>🧰 Guia de Skills de Automação do Repositório</h2>
+            <p>Este repositório está equipado com <strong>Skills Baseadas em Agentes</strong> para automatizar processos de qualidade e QA. As seguintes automações estão disponíveis no diretório <code>.agents/skills/</code>:</p>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Skill</th>
+                        <th>Caminho</th>
+                        <th>Propósito / Descrição</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>code-review</strong></td>
+                        <td><code>.agents/skills/code-review/</code></td>
+                        <td>Realiza auditorias automáticas de arquitetura, Clean Code e conformidade SOLID, gerando o relatório na pasta <code>report-review/</code>.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>unit-testing</strong></td>
+                        <td><code>.agents/skills/unit-testing/</code></td>
+                        <td>Valida nomenclaturas, estrutura AAA e imunidade a mutações dos testes unitários, gerando relatórios de cobertura em <code>report-testes/</code>.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>criar-docs</strong></td>
+                        <td><code>.agents/skills/criar-docs/</code></td>
+                        <td>Gerador automático desta documentação interativa e atualizações do arquivo <code>README.md</code>.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section id="testes">
+            <h2>🧪 Execução de Testes e Cobertura</h2>
+            <p>Os testes unitários cobrem exaustivamente os comportamentos esperados:</p>
+            <div class="code-block">./mvnw test</div>
+            <p>Os relatórios detalhados com a validação QA de qualidade de testes podem ser acessados em:</p>
+            <ul>
+                <li><strong>Relatório HTML de Testes:</strong> <code>desafio-junior/report-testes/unit-testing-report.html</code></li>
+            </ul>
+        </section>
+    </main>
+</body>
+</html>
